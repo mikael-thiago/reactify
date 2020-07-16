@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
-const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 
 const app = express();
@@ -23,7 +22,6 @@ app.use((req, res, next) => {
 });
 */
 
-app.use("/user", userRoute);
 app.use("/authenticate", authRoute);
 
 async function main() {
