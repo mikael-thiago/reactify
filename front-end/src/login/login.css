@@ -1,7 +1,14 @@
-.login-card {
+#root {
     height: 100vh;
-    width: 30vw;
-    position: fixed;
+    width: 100vw;
+    margin: 0px;
+    display: grid;
+    grid-template-columns: 30vw 70vw;
+    grid-template-areas: "login-card login-body";
+}
+.login-card {
+    grid-area: "login-card";
+    height: 1fr;
     background-color: white;
 
     display: flex;
@@ -60,8 +67,7 @@
 }
 
 .login-body{
-    width: 70vw;
+    grid-area: "login-body";
     height: 100vh;
-    padding-left: 30vw;
     background-color: blue;
 }

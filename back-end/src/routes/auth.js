@@ -4,7 +4,8 @@ const router = express.Router();
 
 const auth = require("../controllers/auth.controller");
 
-router.post("/", auth.authenticate);
+router.get("/", auth.authenticate);
+router.get("/callback", auth.callback);
 
 //router.get("/:email", user.getUserByEmail);
 
