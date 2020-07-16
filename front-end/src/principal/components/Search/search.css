@@ -10,9 +10,23 @@
 
 .section-wrapper{
     display: flex;
-    flex-direction: column;
     flex-wrap: nowrap;
     width: 95%;
+}
+
+.section-span{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.section-span button{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #111111;
+    color: #aaaaaa;
 }
 
 .section-title{

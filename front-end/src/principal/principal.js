@@ -64,7 +64,7 @@ const Body = ({ match, history, route }) => {
         <div className="body">
             <Topbar route={route} query={query} setQuery={handleSearchChange} />
             <Switch>
-                <Route exact={true} path={`${match.url}/inicio`}>
+                <Route exact={true} path={`${match.url}/`}>
                     <Inicio />
                 </Route>
                 <Route exact={true} path={`${match.url}/search`}>
