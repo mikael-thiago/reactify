@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import { getSearchResult, getRefreshedToken } from "../../../api-calls/api-calls";
 
-import { ContentItem, ArtistItem } from "../ContentItem/ContentItem";
+import { ContentItem, ArtistItem } from "../../components/ContentItem/ContentItem";
 
 import "./search.css";
 import { getToken, login } from "../../../services/token_manipulation";

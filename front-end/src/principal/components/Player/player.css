@@ -1,0 +1,53 @@
+.player{
+    grid-area: player;
+    width: 100vw;
+    bottom: 0;
+    background-color: #282828;
+    color: white;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: 30vw 55vw 15vw;
+    grid-template-areas: "track-info player-controller player-sound"; 
+}
+
+.track-info{
+    grid-area: track-info;
+    display: flex;
+    align-items: center;
+}
+
+.track-photo{
+    width: 75px;
+    height: 70%;
+    margin: 0 20px;
+}
+
+.track-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+.track-artists{
+    font-size: .7rem;
+    color: #aaaaaa;
+}
+
+.track-name{
+    font-size: .9rem;
+    white-space: nowrap;
+}
+
+.track-photo img{
+    width: 100%;
+    height: 100%;
+}
+
+.player-controller{
+    grid-area: player-controller;
+}
+
+.player-sound{
+    grid-area: player-sound;
+}

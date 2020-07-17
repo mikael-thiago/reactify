@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 
 import { getMyRecentlyPlayed, getMyTopArtists, getRefreshedToken, getNewReleases } from "../../../api-calls/api-calls";
 
-import { ContentItem, ArtistItem } from "../ContentItem/ContentItem";
+import { ContentItem, ArtistItem } from "../../components/ContentItem/ContentItem";
 
 import { getToken, login } from '../../../services/token_manipulation.js';
 
@@ -36,6 +36,7 @@ const Inicio = () => {
                     getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
 
                         getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
+                            console.log(response.data.items);
                             setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
                         });
                     })
@@ -44,6 +45,7 @@ const Inicio = () => {
             })
         }
     }, []);
+
 
     return (
 

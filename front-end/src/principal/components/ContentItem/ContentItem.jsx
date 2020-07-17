@@ -8,7 +8,7 @@ const ContentItem = ({ name = "", photoUrl = "", artists = {} }) => {
     const dispatch = useDispatch();
 
     return (
-        <div className="content-item" onClick={() => { dispatch(setMusic({ photoUrl: photoUrl, trackUrl: "" })); }}>
+        <div className="content-item" onClick={() => { dispatch(setMusic({ photoUrl: photoUrl, trackUrl: "", trackName: name, trackArtists: artists })); }}>
             <div className="content-item-photo">
                 <img className="content-img" src={photoUrl} alt=""></img>
             </div>

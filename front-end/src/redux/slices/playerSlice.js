@@ -5,11 +5,15 @@ export const playerSlice = createSlice({
     initialState: {
         photoUrl: "",
         trackUrl: "",
+        trackName: "",
+        trackArtists: []
     },
     reducers: {
         setMusic: (state, action) => {
             state.trackUrl = action.payload.trackUrl;
             state.photoUrl = action.payload.photoUrl;
+            state.trackName = action.payload.trackName;
+            state.trackArtists = action.payload.trackArtists;
         }
     }
 })

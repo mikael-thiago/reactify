@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import "./principal.css";
-import Inicio from "./components/Inicio/Inicio";
+
+import Player from "./components/Player/Player";
+
+import Inicio from "./routes/Inicio/Inicio";
 import Sidebar from "./components/Sidebar/Sidebar";
-import SearchPage from "./components/Search/Search";
+import SearchPage from "./routes/Search/Search";
 
 import reduxStore from "../redux/store/store.js";
 import { useSelector, Provider, useDispatch } from "react-redux";
@@ -83,17 +86,6 @@ const Body = ({ match, history, route }) => {
     );
 }
 
-const Player = () => {
-
-    const player = useSelector((state) => state.player);
-
-    return (
-        <div className="player">
-            <h1>{player.photoUrl}</h1>
-            <h2>{player.trackUrl}</h2>
-        </div>
-    )
-}
 const Principal = ({ match, history }) => {
 
     const [route, setRoute] = useState("Início");
