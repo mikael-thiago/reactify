@@ -1,21 +1,36 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState } from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import "./principal.css";
 import Inicio from "./components/Inicio/Inicio";
 import Sidebar from "./components/Sidebar/Sidebar";
 import SearchPage from "./components/Search/Search";
 
-const Topbar = ({ query, setQuery, route }) => {
+import reduxStore from "../redux/store/store.js";
+import { useSelector, Provider, useDispatch } from "react-redux";
+
+import { setQuery } from "../redux/slices/searchSlice.js";
+
+const Topbar = () => {
 
     let SidebarAdition;
 
-    if (route === "Início") {
+    const search = useSelector((state) => state.search);
+    const route = useSelector((state) => state.route);
+
+    const dispatch = useDispatch();
+
+    const changeSearch = (e) => {
+        dispatch(setQuery({ query: e.target.value }));
+    }
+
+    if (route.route === "Início") {
         SidebarAdition = () => (<></>);
-    } else if (route === "Buscar") {
+    } else if (route.route === "Buscar") {
+
         SidebarAdition = () => (
             <div className="search-input">
                 <svg className="search-input-icon" height="24" role="img" width="24" viewBox="0 0 512 512" aria-hidden="true"><path d="M349.714 347.937l93.714 109.969-16.254 13.969-93.969-109.969q-48.508 36.825-109.207 36.825-36.826 0-70.476-14.349t-57.905-38.603-38.603-57.905-14.349-70.476 14.349-70.476 38.603-57.905 57.905-38.603 70.476-14.349 70.476 14.349 57.905 38.603 38.603 57.905 14.349 70.476q0 37.841-14.73 71.619t-40.889 58.921zM224 377.397q43.428 0 80.254-21.461t58.286-58.286 21.461-80.254-21.461-80.254-58.286-58.285-80.254-21.46-80.254 21.46-58.285 58.285-21.46 80.254 21.46 80.254 58.285 58.286 80.254 21.461z" fill="currentColor"></path></svg>
-                <input autoFocus placeholder="Busque artistas, músicas ou podcasts" value={query} onChange={e => setQuery(e)}></input>
+                <input autoFocus placeholder="Busque artistas, músicas ou podcasts" value={search.query} onChange={changeSearch}></input>
             </div>
         );
     } else {
@@ -51,22 +66,16 @@ const Topbar = ({ query, setQuery, route }) => {
 };
 
 const Body = ({ match, history, route }) => {
-    const [query, setQuery] = useState("");
-
-    const handleSearchChange = (e) => {
-
-        setQuery(e.target.value)
-    }
 
     return (
         <div className="body">
-            <Topbar route={route} query={query} setQuery={handleSearchChange} />
+            <Topbar route={route} />
             <Switch>
                 <Route exact={true} path={`${match.url}`}>
                     <Inicio />
                 </Route>
                 <Route exact={true} path={`${match.url}/search`}>
-                    <SearchPage query={query} />
+                    <SearchPage />
                 </Route>
             </Switch>
 
@@ -75,9 +84,13 @@ const Body = ({ match, history, route }) => {
 }
 
 const Player = () => {
+
+    const player = useSelector((state) => state.player);
+
     return (
         <div className="player">
-            <h1>ETA</h1>
+            <h1>{player.photoUrl}</h1>
+            <h2>{player.trackUrl}</h2>
         </div>
     )
 }
@@ -85,13 +98,17 @@ const Principal = ({ match, history }) => {
 
     const [route, setRoute] = useState("Início");
 
+    const store = reduxStore;
+
     return (
         <>
-            <Router>
-                <Sidebar setRoute={setRoute} match={match} history={history} />
-                <Body route={route} match={match} history={history} />
-                <Player />
-            </Router>
+            <Provider store={reduxStore}>
+                <Router>
+                    <Sidebar setRoute={setRoute} match={match} history={history} />
+                    <Body route={route} match={match} history={history} />
+                    <Player />
+                </Router>
+            </Provider>
         </>
     )
 }

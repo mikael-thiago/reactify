@@ -5,8 +5,9 @@ import { ContentItem, ArtistItem } from "../ContentItem/ContentItem";
 
 import "./search.css";
 import { getToken, login } from "../../../services/token_manipulation";
+import { useSelector } from "react-redux";
 
-const SearchPage = ({ query }) => {
+const SearchPage = () => {
     const authorizationData = getToken();
     const [data, setData] = useState({});
 
@@ -23,7 +24,7 @@ const SearchPage = ({ query }) => {
     const artistsSectionRef = useRef();
     const artistsSectionButtonRef = useRef();
 
-    console.log(tracks);
+    const query = useSelector((state) => state.search).query;
 
     useEffect(() => {
         

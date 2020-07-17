@@ -1,17 +1,24 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setRoute } from "../../../redux/slices/routeSlice.js";
+import { setActiveItem } from "../../../redux/slices/sidebarSlice.js";
 
-const SidebarLink = ({ name, to = "", xmlns = "", d = "", active = "", setActive, setRoute }) => {
+const SidebarLink = ({ name, to = "", xmlns = "", d = "" }) => {
 
-    const activeClass = (active === name) ? " active" : "";
+    const sidebarState = useSelector((state) => state.sidebar);
+
+    const activeClass = (sidebarState.activeItem === name) ? " active" : "";
+
+    const dispatch = useDispatch();
 
     const handleClick = () => {
-        setRoute(name);
-        setActive(name);
+        dispatch(setRoute({ route: name }));
+        dispatch(setActiveItem({ activeItem: name }));
     }
 
     if (activeClass === " active") {
-        setRoute(name);
+        dispatch(setRoute({ route: name }));
     }
 
     return (
