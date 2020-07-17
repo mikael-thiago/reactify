@@ -9,15 +9,15 @@ var client_secret = process.env.client_secret;
 var redirect_uri = 'http://localhost:4000/authenticate/callback'; // Your redirect uri
 
 refreshToken = (req, res) => {
-    const refresh_token = req.body.refresh_token;
-    const grant_type = "authorization_code";
+    const refresh_token = req.params.refresh_token;
+    const grant_type = "refresh_token";
 
+    console.log(refresh_token);
     var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
             grant_type: grant_type,
-            code: refresh_token,
-            redirect_uri: redirect_uri
+            refresh_token: refresh_token
         },
         headers: {
             "Authorization": "Basic " + (new Buffer(client_id + ":" + client_secret).toString('base64'))
@@ -30,12 +30,16 @@ refreshToken = (req, res) => {
             var access_token = body.access_token,
                 refresh_token = body.refresh_token;
 
-            res.redirect("http://localhost:3000/?" +
+            res.status(200).send({ access_token: access_token, refresh_token: refresh_token });
+
+            /*res.redirect("http://localhost:3000/?" +
                 querystring.stringify({
                     access_token: access_token,
                     refresh_token: refresh_token
                 })
-            );
+            );*/
+        } else {
+            res.status(200).send({ erro: erro });
         }
     })
 
@@ -94,5 +98,6 @@ callback = (req, res) => {
 
 module.exports = {
     authenticate,
-    callback
+    callback,
+    refreshToken
 }

@@ -1,30 +1,28 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import "./login.css";
 
-import axios from "axios";
-import { UserContext } from '../contexts/userContext';
+import "../services/token_manipulation";
+import { getToken, login } from '../services/token_manipulation';
 
 const LoginCard = ({ search, history }) => {
 
     const emailRef = useRef(null);
     const senhaRef = useRef(null);
 
-    const userContext = useContext(UserContext);
-
     useEffect(() => {
 
         const params = new URLSearchParams(search);
         const access_token = params.get("access_token");
+        const refresh_token = params.get("refresh_token");
 
         if (access_token !== null) {
-            userContext.login(access_token);
-            console.log(userContext);
-            history.push("/principal");
+            login(access_token, refresh_token);
+            history.push("/principal/");
         } else {
-            if (userContext.access_token !== null) history.push("/principal");
+            if (getToken() !== null) history.push("/principal/");
         }
 
-    });
+    }, []);
 
     return (
         <div className="login-card">

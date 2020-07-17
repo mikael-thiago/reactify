@@ -5,17 +5,14 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import LoginPage from './login/login';
 import Principal from './principal/principal';
-import UserContextProvider from './contexts/userContext';
 
 ReactDOM.render(
-  <UserContextProvider>
-    <Router>
-      <Switch>
-        <Route exact={true} path="/" component={LoginPage} />
-        <Route exact={false} path="/principal" component={Principal} />
-      </Switch>
-    </Router>
-  </UserContextProvider>,
+  <Router>
+    <Switch>
+      <Route exact={true} path="/" component={LoginPage} />
+      <Route exact={false} path="/principal" component={Principal} />
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 

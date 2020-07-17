@@ -4,7 +4,8 @@
     margin: 0px;
     display: grid;
     grid-template-columns: 232px 1fr;
-    grid-template-areas: "sidebar body";
+    grid-template-rows: calc(100vh - 90px) 90px;
+    grid-template-areas: "sidebar body" "player player";
 }
 
 body{
@@ -17,9 +18,16 @@ body{
     grid-area: body;
     grid-template-rows: 60px 1fr;
     grid-template-areas: "topbar" "main-view";
-    height: 100vh;
 }
 
+.player{
+    grid-area: player;
+    width: 100vw;
+    bottom: 0;
+    background-color: #282828;
+    color: white;
+    z-index: 100;
+}
 .topbar{
     grid-area: topbar;
     position: sticky;
@@ -46,11 +54,11 @@ body{
 }
 
 .topbar-button:hover{
-    background-color: #666666;
+    background-color: #282828;
 }
 
 .topbar-button .active{
-    background-color: #666666;
+    background-color: #282828;
 }
 
 .arrows{

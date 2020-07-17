@@ -1,15 +1,16 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 
-import { getMyRecentlyPlayed, getMyTopArtists } from "../../../api-calls/api-calls";
+import { getMyRecentlyPlayed, getMyTopArtists, getRefreshedToken, getNewReleases } from "../../../api-calls/api-calls";
 
 import { ContentItem, ArtistItem } from "../ContentItem/ContentItem";
-import { UserContext } from "../../../contexts/userContext";
+
+import { getToken, login } from '../../../services/token_manipulation.js';
 
 import "./inicio.css";
 
 const Inicio = () => {
 
-    const userContext = useContext(UserContext);
+    const authorizationData = getToken();
 
     const [data, setData] = useState({});
     const recentlyPlayed = data.recentlyPlayed || [];
@@ -17,15 +18,32 @@ const Inicio = () => {
 
     useEffect(() => {
 
-        if (userContext.access_token !== null) {
-            getMyRecentlyPlayed(userContext.access_token).then((response) => {
+        if (authorizationData !== null) {
 
-                getMyTopArtists(userContext.access_token).then((responseTopArtists) => {
+            getNewReleases(authorizationData.access_token);
+
+            getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
+
+                getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
                     setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
+                });
+            }).catch((erro) => {
+                getRefreshedToken(authorizationData.refresh_token).then((access_token) => {
+
+                    login(access_token, authorizationData.refresh_token);
+                    authorizationData.access_token = access_token;
+
+                    getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
+
+                        getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
+                            setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
+                        });
+                    })
+
                 });
             })
         }
-    }, [userContext.access_token]);
+    }, []);
 
     return (
 
@@ -57,11 +75,12 @@ const Inicio = () => {
                     )
                     }
                 </div>
+
+                <div style={{ height: "100px" }}>
+
+                </div>
             </div>
 
-            <div style={{ height: "200px" }}>
-
-            </div>
         </div>
     )
 }

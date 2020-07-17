@@ -1,26 +1,47 @@
 import axios from "axios";
 
-const getMyAlbuns = async (access_token) => {
-    const result = await (axios.get("https://api.spotify.com/v1/me/albums", {
+const getRefreshedToken = async (refresh_token) => {
+    const response = await (axios.get("http://localhost:4000/authenticate/refreshToken/" + refresh_token));
+    return response.data.access_token;
+}
+
+const getMyAlbuns = async (access_token, refresh_token) => {
+    let result;
+
+    result = await (axios.get("https://api.spotify.com/v1/me/albums", {
         headers: {
             "Authorization": "Bearer " + access_token
         }
     }));
 
+
     return result;
 }
 
-const getMyRecentlyPlayed = async (access_token) => {
+const getNewReleases = async (access_token) => {
+    const result = await (axios.get("https://api.spotify.com/v1/browse/new-releases", {
+        headers: {
+            "Authorization": "Bearer " + access_token
+        }
+    }));
+
+    console.log(result.data);
+
+    return result;
+}
+
+const getMyRecentlyPlayed = async (access_token, refresh_token) => {
     const result = await (axios.get("https://api.spotify.com/v1/me/player/recently-played", {
         headers: {
             "Authorization": "Bearer " + access_token
         }
-    }));
+    }
+    ));
 
     return result;
 }
 
-const getMyTopArtists = async (access_token) => {
+const getMyTopArtists = async (access_token, refresh_token) => {
     const result = (await axios.get("https://api.spotify.com/v1/me/top/artists", {
         headers: {
             "Authorization": "Bearer " + access_token
@@ -30,7 +51,7 @@ const getMyTopArtists = async (access_token) => {
     return result;
 }
 
-const getMyPlaylists = async (access_token) => {
+const getMyPlaylists = async (access_token, refresh_token) => {
     const result = (await axios.get("https://api.spotify.com/v1/me/playlists", {
         headers: {
             "Authorization": "Bearer " + access_token
@@ -58,4 +79,4 @@ const getSearchResult = async (access_token, query, type) => {
     return result;
 }
 
-export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult };
+export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult, getRefreshedToken, getNewReleases };

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../../contexts/userContext";
 
 const SidebarLink = ({ name, to = "", xmlns = "", d = "", active = "", setActive, setRoute }) => {
 

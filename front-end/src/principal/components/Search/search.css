@@ -4,7 +4,7 @@
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 100vh;
+    height: 100%;
     align-items: center;
 }
 

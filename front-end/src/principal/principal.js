@@ -3,7 +3,6 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import "./principal.css";
 import Inicio from "./components/Inicio/Inicio";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { UserContext } from "../contexts/userContext";
 import SearchPage from "./components/Search/Search";
 
 const Topbar = ({ query, setQuery, route }) => {
@@ -47,7 +46,6 @@ const Topbar = ({ query, setQuery, route }) => {
 
             <SidebarAdition />
 
-
         </div>
     );
 };
@@ -64,7 +62,7 @@ const Body = ({ match, history, route }) => {
         <div className="body">
             <Topbar route={route} query={query} setQuery={handleSearchChange} />
             <Switch>
-                <Route exact={true} path={`${match.url}/`}>
+                <Route exact={true} path={`${match.url}`}>
                     <Inicio />
                 </Route>
                 <Route exact={true} path={`${match.url}/search`}>
@@ -76,6 +74,13 @@ const Body = ({ match, history, route }) => {
     );
 }
 
+const Player = () => {
+    return (
+        <div className="player">
+            <h1>ETA</h1>
+        </div>
+    )
+}
 const Principal = ({ match, history }) => {
 
     const [route, setRoute] = useState("Início");
@@ -85,6 +90,7 @@ const Principal = ({ match, history }) => {
             <Router>
                 <Sidebar setRoute={setRoute} match={match} history={history} />
                 <Body route={route} match={match} history={history} />
+                <Player />
             </Router>
         </>
     )
