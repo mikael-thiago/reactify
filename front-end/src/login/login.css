@@ -2,13 +2,22 @@
     height: 100vh;
     width: 100vw;
     margin: 0px;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+}
+
+.login-wrapper{
     display: grid;
     grid-template-columns: 30vw 70vw;
     grid-template-areas: "login-card login-body";
 }
+
 .login-card {
-    grid-area: "login-card";
-    height: 1fr;
+    grid-area: login-card;
+    height: 100vh;
     background-color: white;
 
     display: flex;
@@ -49,25 +58,44 @@
 
 .login-form button{
     width: 100px;
-    height: 50px;
+    height: 100px;
 
-    border-radius: 3px;
+    border-radius: 50%;
     margin-top: 15px;
     
     border: hidden;
-    background-color: #eeeeee;
-    color: black;
+    background-color: #1DB954;
+    color: white;
 
     cursor: pointer;
+
+    transition: .5s;
+    display: flex;
 
 }
 
 .login-form button:hover{
-    background-color: #aaaaaa;
+    background-color: #1DB975;
 }
 
 .login-body{
-    grid-area: "login-body";
+    grid-area: login-body;
     height: 100vh;
-    background-color: blue;
+    background-color: #282828;
+}
+
+.login-form button a{
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    color: #dddddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .5s;
+}
+
+.login-form button a:hover{
+    text-decoration: none;
+    color: white;
 }

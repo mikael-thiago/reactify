@@ -2,15 +2,20 @@
     height: 100vh;
     width: 100vw;
     margin: 0px;
+}
+
+body{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #111111;
+}
+
+.principal-wrapper{
     display: grid;
     grid-template-columns: 232px 1fr;
     grid-template-rows: calc(100vh - 90px) 90px;
     grid-template-areas: "sidebar body" "player player";
-}
-
-body{
-    overflow: hidden;
-    background-color: #111111;
 }
 
 .body{

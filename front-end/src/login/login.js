@@ -6,9 +6,6 @@ import { getToken, login } from '../services/token_manipulation';
 
 const LoginCard = ({ search, history }) => {
 
-    const emailRef = useRef(null);
-    const senhaRef = useRef(null);
-
     useEffect(() => {
 
         const params = new URLSearchParams(search);
@@ -17,9 +14,9 @@ const LoginCard = ({ search, history }) => {
 
         if (access_token !== null) {
             login(access_token, refresh_token);
-            history.push("/principal/");
+            history.push("/principal");
         } else {
-            if (getToken() !== null) history.push("/principal/");
+            if (getToken() !== null) history.push("/principal");
         }
 
     }, []);
@@ -32,10 +29,6 @@ const LoginCard = ({ search, history }) => {
 
             <div className="login-card-body">
                 <form className="login-form">
-                    <label htmlFor="Email">Email</label>
-                    <input type="text" name="Email" ref={emailRef} />
-                    <label htmlFor="Senha">Senha</label>
-                    <input type="password" name="Senha" ref={senhaRef} />
 
                     <div style={{ width: "100%", justifyContent: "center", display: "flex", flexDirection: "row" }}>
                         <button><a href="http://localhost:4000/authenticate/">Login</a></button>
@@ -49,12 +42,12 @@ const LoginCard = ({ search, history }) => {
 
 const LoginPage = (props) => {
     return (
-        <>
+        <div className="login-wrapper">
             <LoginCard search={props.location.search} history={props.history} />
             <div className="login-body">
 
             </div>
-        </>
+        </div>
     );
 }
 

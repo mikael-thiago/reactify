@@ -104,9 +104,11 @@ const Principal = ({ match, history }) => {
         <>
             <Provider store={reduxStore}>
                 <Router>
-                    <Sidebar setRoute={setRoute} match={match} history={history} />
-                    <Body route={route} match={match} history={history} />
-                    <Player />
+                    <div className="principal-wrapper">
+                        <Sidebar setRoute={setRoute} match={match} history={history} />
+                        <Body route={route} match={match} history={history} />
+                        <Player />
+                    </div>
                 </Router>
             </Provider>
         </>
