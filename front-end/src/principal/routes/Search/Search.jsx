@@ -89,6 +89,7 @@ const SearchPage = () => {
     }
 
     const renderTracks = () => {
+        
         if (tracks.length !== 0) {
             return (
 
@@ -105,7 +106,7 @@ const SearchPage = () => {
                     </span>
                     <div className="section-content" ref={tracksSectionRef}>
                         {tracks.map((track, index) => (
-                            <ContentItem key={index} name={track.name} photoUrl={track.album.images[0].url} artists={track.artists} />
+                            <ContentItem key={index} name={track.name} photoUrl={track.album.images[0].url} artists={track.artists} trackUrl={track.preview_url} />
                         ))}
                     </div>
                 </div>

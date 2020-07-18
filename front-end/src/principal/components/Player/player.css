@@ -20,6 +20,12 @@
     width: 75px;
     height: 70%;
     margin: 0 20px;
+    min-width: 75px;
+}
+
+.track-photo img{
+    width: 100%;
+    height: 100%;
 }
 
 .track-text{
@@ -27,6 +33,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: left;
+    width: 100%;
 }
 
 .track-artists{
@@ -35,18 +42,73 @@
 }
 
 .track-name{
+    width: 100%;
     font-size: .9rem;
     white-space: nowrap;
-}
-
-.track-photo img{
-    width: 100%;
-    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .player-controller{
     grid-area: player-controller;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
 }
+
+.player-timeline{
+    width: 70%;
+    display: flex;
+    align-items: center;
+}
+
+.player-timeline-actual{
+    height: 3px;
+    border-radius: 50px;
+    background-color: #bbbbbb;
+}
+
+.player-timeline-restant{
+    height: 3px;
+    border-radius: 50px;
+    background-color: #555555;
+}
+
+.player-controls{
+    display: flex;
+    justify-content: left;
+    margin: 10px;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+.player-control-play-pause{
+    height: 35px;
+    width: 35px;
+    border-radius: 35px;
+    border: 1px solid #bbbbbb;
+    outline: none;
+    cursor: pointer;
+    background-color: transparent;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-control-play-pause img{
+    width: 60%;
+    height: 60%;
+}
+
+
+.track-time-info{
+    font-size: .7rem;
+    color: #bbbbbb;
+    margin: 5px;
+}
+
 
 .player-sound{
     grid-area: player-sound;

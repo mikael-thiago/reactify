@@ -20,9 +20,11 @@ const Inicio = () => {
 
         if (authorizationData !== null) {
 
-            getNewReleases(authorizationData.access_token);
+            //getNewReleases(authorizationData.access_token);
 
             getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
+
+                console.log(response.data.items);
 
                 getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
                     setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
@@ -36,7 +38,6 @@ const Inicio = () => {
                     getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
 
                         getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
-                            console.log(response.data.items);
                             setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
                         });
                     })
@@ -58,7 +59,7 @@ const Inicio = () => {
 
                 <div className="section-content">
                     {recentlyPlayed.map((item, index) => (
-                        <ContentItem key={index} name={item.track.name} photoUrl={item.track.album.images[0].url} artists={item.track.artists} />
+                        <ContentItem key={index} name={item.track.name} photoUrl={item.track.album.images[0].url} artists={item.track.artists} trackUrl={item.track.preview_url} />
                     )
                     )
                     }

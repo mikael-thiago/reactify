@@ -1,19 +1,93 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setTime, setDuration, setPlaying } from "../../../redux/slices/playerSlice";
 import "./player.css";
+
+import pause from "../../../images/pause.svg";
+import play from "../../../images/play.svg";
+
+const PlayerController = () => {
+    return (
+        <div className="player-controller">
+            <div className="player-controls">
+                <div className="player-control previous">
+
+                </div>
+                <div className="player-control play-pause">
+
+                </div>
+                <div className="player-control next">
+
+                </div>
+            </div>
+            <div className="player-timeline-wrapper">
+                <div className="player-actual-time">
+
+                </div>
+                <div className="player-timeline">
+
+                </div>
+                <div className="player-duration">
+
+                </div>
+            </div>
+        </div>
+    )
+}
 
 const Player = () => {
 
     const player = useSelector((state) => state.player);
 
-    console.log(player);
+    const dispatch = useDispatch();
+
+    const audioRef = useRef();
+
+    const handlePlayPause = () => {
+
+        if (player.actualTime === player.duration)
+            dispatch(setTime({ actualTime: 0 }));
+
+        if (player.playing)
+            audioRef.current.pause();
+        else
+            audioRef.current.play();
+
+        dispatch(setPlaying({ playing: !player.playing }));
+    }
+
+    const parseTime = (time) => {
+        let hours = 0, minutes = 0, seconds = 0;
+
+        while (time > 60) {
+            time = time % 60;
+
+            minutes += 1;
+
+            if (minutes == 60) {
+                minutes = 0;
+                hours += 1;
+            }
+        }
+
+        seconds = time;
+
+        hours = (hours > 0 ? (hours > 9 ? hours : "0" + hours + ":") : "");
+        minutes = (minutes > 9 ? minutes : "0" + minutes);
+        seconds = (seconds > 9 ? seconds : "0" + seconds);
+
+        return hours + minutes + ":" + seconds;
+
+    }
 
     return (
         <div className="player">
+
             <div className="track-info">
                 <div className="track-photo">
                     <img src={player.photoUrl} alt="" />
                 </div>
+
                 <div className="track-text">
                     <div className="track-name">
                         {player.trackName}
@@ -23,14 +97,42 @@ const Player = () => {
                         )}
                     </div>
                 </div>
-            </div>
-            <div className="player-controller">
 
             </div>
+
+            <div className="player-controller">
+
+                {player.trackUrl ? <audio autoPlay onPlay={() => { dispatch(setDuration({ duration: audioRef.current.duration })); }} onTimeUpdate={() => { dispatch(setTime({ actualTime: audioRef.current.currentTime })) }} src={player.trackUrl} ref={audioRef}>
+                </audio> : <></>}
+                <div className="player-controls">
+                    <button className="player-control-play-pause" onClick={handlePlayPause}>
+                        <img src={(player.playing ? pause : play)} alt="">
+                        </img>
+                    </button>
+                </div>
+                <div className="player-timeline">
+
+                    <div className="track-time-info actual-time">
+                        {parseTime(parseInt(player.actualTime))}
+                    </div>
+
+                    <div className="player-timeline-actual" style={{ width: (player.actualTime * 100 / player.duration) + "%" }}>
+
+                    </div>
+                    <div className="player-timeline-restant" style={{ width: (100 - (player.actualTime * 100 / player.duration)) + "%" }}>
+
+                    </div>
+
+                    <div className="track-time-info duration">
+                        {parseTime(parseInt(player.duration))}
+                    </div>
+                </div>
+            </div>
+
             <div className="player-sound">
 
             </div>
-        </div>
+        </div >
     )
 }
 

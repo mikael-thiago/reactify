@@ -99,7 +99,7 @@ const Principal = ({ match, history }) => {
                     <div className="principal-wrapper">
                         <Sidebar setRoute={setRoute} match={match} history={history} />
                         <Body route={route} match={match} history={history} />
-                        <Player />
+                        <Player match={match} />
                     </div>
                 </Router>
             </Provider>

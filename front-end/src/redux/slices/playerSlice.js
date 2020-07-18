@@ -4,9 +4,12 @@ export const playerSlice = createSlice({
     name: "player",
     initialState: {
         photoUrl: "",
-        trackUrl: "",
+        trackUrl: null,
         trackName: "",
-        trackArtists: []
+        trackArtists: [],
+        actualTime: 0,
+        duration: 0,
+        playing: true
     },
     reducers: {
         setMusic: (state, action) => {
@@ -14,10 +17,20 @@ export const playerSlice = createSlice({
             state.photoUrl = action.payload.photoUrl;
             state.trackName = action.payload.trackName;
             state.trackArtists = action.payload.trackArtists;
+            state.playing = true;
+        },
+        setTime: (state, action) => {
+            state.actualTime = action.payload.actualTime;
+        },
+        setDuration: (state, action) => {
+            state.duration = action.payload.duration;
+        },
+        setPlaying: (state, action) => {
+            state.playing = action.payload.playing;
         }
     }
 })
 
-export const { setMusic } = playerSlice.actions;
+export const { setMusic, setTime, setDuration, setPlaying } = playerSlice.actions;
 
 export default playerSlice.reducer;

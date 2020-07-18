@@ -3,12 +3,12 @@ import "./contentItem.css";
 import { setMusic } from "../../../redux/slices/playerSlice.js";
 import { useDispatch } from "react-redux";
 
-const ContentItem = ({ name = "", photoUrl = "", artists = {} }) => {
+const ContentItem = ({ name = "", photoUrl = "", artists = {}, trackUrl = null }) => {
 
     const dispatch = useDispatch();
 
     return (
-        <div className="content-item" onClick={() => { dispatch(setMusic({ photoUrl: photoUrl, trackUrl: "", trackName: name, trackArtists: artists })); }}>
+        <div className="content-item" onClick={() => { dispatch(setMusic({ photoUrl: photoUrl, trackUrl: trackUrl, trackName: name, trackArtists: artists })); }}>
             <div className="content-item-photo">
                 <img className="content-img" src={photoUrl} alt=""></img>
             </div>
