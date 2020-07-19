@@ -44,7 +44,7 @@ const parseDurationTime = (ms) => {
 
 }
 
-const MusicRow = ({ track = {}, albumPhotoUrl = "" }) => {
+const TrackRow = ({ track = {}, albumPhotoUrl = "" }) => {
 
     const [hover, setHover] = useState(false);
 
@@ -65,9 +65,13 @@ const MusicRow = ({ track = {}, albumPhotoUrl = "" }) => {
         return hours + minutes + ":" + seconds;
     }
 
+    const playMusic = () => {
+        dispatch(setTrack({ trackUrl: track.preview_url, photoUrl: albumPhotoUrl, trackName: track.name, trackArtists: track.artists }));
+    }
+
     return (
-        <div className="track-row" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <div className="music-icon" onClick={() => { dispatch(setTrack({ trackUrl: track.preview_url, photoUrl: albumPhotoUrl, trackName: track.name, trackArtists: track.artists })) }}>
+        <div className="album-track-row" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <div className="music-icon" onClick={playMusic}>
                 <img src={hover ? play : music}></img>
             </div>
             <div className="album-track-text">
@@ -132,11 +136,12 @@ const AlbumPage = ({ match }) => {
 
     const ArtistLink = ({ children, artist_id }) => {
         return (
-            <Link className="album-artist-link" to={"principal/artist/" + artist_id} >
+            <Link className="album-artist-link" to={"/principal/artista/" + artist_id} >
                 {children}
             </Link>
         );
     }
+
     const retorno = (albumData ? (
         <div className="album-wrapper">
 
@@ -179,9 +184,14 @@ const AlbumPage = ({ match }) => {
                 </div>
             </div>
 
-            <div className="tracks-wrapper">
-                {albumData.tracks.items.map((track, index) => (<MusicRow track={track} albumPhotoUrl={albumData.images[0] ? albumData.images[0].url : ""} />))}
+            <div className="album-tracks-wrapper">
+                {albumData.tracks.items.map((track, index) => (<TrackRow track={track} albumPhotoUrl={albumData.images[0] ? albumData.images[0].url : ""} />))}
+
+                <div className="album-copyrights">
+                    {albumData.copyrights.map((copyright, index) => (<div>{copyright.text}</div>))}
+                </div>
             </div>
+
         </div>
     ) : (<></>));
 

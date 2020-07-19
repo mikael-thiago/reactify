@@ -72,21 +72,24 @@
     color: #aaaaaa
 }
 
-.tracks-wrapper{
+.album-tracks-wrapper{
     grid-area: tracks-wrapper;
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: 0px 35px;
+    width: 95%;
 }
 
-.track-row{
+.album-track-row{
     display: flex;
     color: white;
     height: 60px;
+    width: 100%;
     align-items: center;
 }
 
-.track-row:hover{
+.album-track-row:hover{
     background-color: #282828;
 }
 
@@ -137,4 +140,15 @@
 
 .album-artist-link:hover{
     text-decoration: underline;
+}
+
+.album-copyrights{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100px;
+    color: #bbbbbb;
+    font-size: .65rem;
+    margin-top: 50px;
+    margin-bottom: 30px;
 }
