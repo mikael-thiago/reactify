@@ -9,7 +9,7 @@ export const playerSlice = createSlice({
         trackArtists: [],
         actualTime: 0,
         duration: 0,
-        playing: true
+        playing: false
     },
     reducers: {
         setTrack: (state, action) => {
@@ -17,7 +17,9 @@ export const playerSlice = createSlice({
             state.photoUrl = action.payload.photoUrl;
             state.trackName = action.payload.trackName;
             state.trackArtists = action.payload.trackArtists;
-            state.playing = true;
+            state.playing = state.trackUrl ? true : false;
+            state.actualTime = 0;
+            state.duration = (action.payload.duration) ? action.payload.duration : 30;
         },
         setTime: (state, action) => {
             state.actualTime = action.payload.actualTime;

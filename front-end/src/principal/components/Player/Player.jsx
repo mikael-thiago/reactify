@@ -85,16 +85,16 @@ const Player = () => {
     return (
         <div className="player">
 
-            <div className="track-info">
-                <div className="track-photo">
+            <div className="player-track-info">
+                <div className="player-track-photo">
                     <img src={player.photoUrl} alt="" />
                 </div>
 
-                <div className="track-text">
-                    <div className="track-name">
+                <div className="player-track-text">
+                    <div className="player-track-name">
                         {player.trackName}
                     </div>
-                    <div className="track-artists">
+                    <div className="player-track-artists">
                         {player.trackArtists.map((artist, index) => ((player.trackArtists.length - 1) === index ? artist.name : artist.name + ", ")
                         )}
                     </div>
@@ -114,7 +114,7 @@ const Player = () => {
                 </div>
                 <div className="player-timeline">
 
-                    <div className="track-time-info actual-time">
+                    <div className="player-track-time-info actual-time">
                         {parseTime(parseInt(player.actualTime))}
                     </div>
 
@@ -125,7 +125,7 @@ const Player = () => {
 
                     </div>
 
-                    <div className="track-time-info duration">
+                    <div className="player-track-time-info duration">
                         {parseTime(parseInt(player.duration))}
                     </div>
                 </div>

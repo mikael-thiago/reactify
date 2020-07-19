@@ -83,26 +83,47 @@
     display: flex;
     color: white;
     height: 60px;
+    align-items: center;
 }
 
 .track-row:hover{
     background-color: #282828;
 }
 
-.track-text{
+.music-icon{
+    width: 20px;
+    height: 20px;
     margin: 0px 10px;
 }
 
-.track-name{
+.music-icon img{
+    height: 100%;
+    width: 100%;
+}
+
+.album-track-text{
+    margin: 0px 10px;
+    width: 100%;
+}
+
+.album-track-name{
     font-size: 1rem;
     font-weight: bold;
 }
 
-.track-duration{
+.album-track-artists{
+    font-size: .7rem;
+    color: #aaaaaa;
+    
+}
+
+.album-track-duration{
     color: #aaaaaa;
     font-weight: bold;
-    margin: 5px 10px;
-    
+    height: 100%;
+
+    margin: 0px 10px;
+    padding-top: 10px;
 }
 
 .album-artists{

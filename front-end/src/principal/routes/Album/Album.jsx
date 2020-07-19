@@ -3,9 +3,15 @@ import { withRouter } from "react-router";
 
 import "./album.css";
 
+import music from "../../../images/musica.svg";
+import play from "../../../images/play.svg";
+
 import { getAlbum, getArtists } from "../../../api-calls/api-calls.js";
 import { getToken } from "../../../services/token_manipulation";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { setTrack } from "../../../redux/slices/playerSlice";
 
 const parseDurationTime = (ms) => {
 
@@ -38,7 +44,12 @@ const parseDurationTime = (ms) => {
 
 }
 
-const MusicRow = ({ track = {} }) => {
+const MusicRow = ({ track = {}, albumPhotoUrl = "" }) => {
+
+    const [hover, setHover] = useState(false);
+
+    const player = useSelector((state) => state.player);
+    const dispatch = useDispatch();
 
     const musicDurationTime = () => {
         const duration_ms = track.duration_ms;
@@ -55,16 +66,19 @@ const MusicRow = ({ track = {} }) => {
     }
 
     return (
-        <div className="track-row">
-            <div className="track-text">
-                <div className="track-name">
+        <div className="track-row" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <div className="music-icon" onClick={() => { dispatch(setTrack({ trackUrl: track.preview_url, photoUrl: albumPhotoUrl, trackName: track.name, trackArtists: track.artists })) }}>
+                <img src={hover ? play : music}></img>
+            </div>
+            <div className="album-track-text">
+                <div className="album-track-name">
                     {track.name}
                 </div>
-                <div className="track-artists">
+                <div className="album-track-artists">
                     {track.artists.map((artist, index) => ((index === track.artists.length - 1) ? artist.name : artist.name + ", "))}
                 </div>
             </div>
-            <div className="track-duration">
+            <div className="album-track-duration">
                 {musicDurationTime()}
             </div>
         </div>
@@ -166,7 +180,7 @@ const AlbumPage = ({ match }) => {
             </div>
 
             <div className="tracks-wrapper">
-                {albumData.tracks.items.map((track, index) => (<MusicRow track={track} />))}
+                {albumData.tracks.items.map((track, index) => (<MusicRow track={track} albumPhotoUrl={albumData.images[0] ? albumData.images[0].url : ""} />))}
             </div>
         </div>
     ) : (<></>));

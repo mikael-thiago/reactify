@@ -10,38 +10,39 @@
     grid-template-areas: "track-info player-controller player-sound"; 
 }
 
-.track-info{
+.player-track-info{
     grid-area: track-info;
     display: flex;
     align-items: center;
 }
 
-.track-photo{
+.player-track-photo{
     width: 75px;
     height: 70%;
     margin: 0 20px;
     min-width: 75px;
 }
 
-.track-photo img{
+.player-track-photo img{
     width: 100%;
     height: 100%;
 }
 
-.track-text{
+.player-track-text{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: left;
     width: 100%;
+    min-width: 0;
 }
 
-.track-artists{
+.player-track-artists{
     font-size: .7rem;
     color: #aaaaaa;
 }
 
-.track-name{
+.player-track-name{
     width: 100%;
     font-size: .9rem;
     white-space: nowrap;
@@ -83,6 +84,7 @@
     display: flex;
     justify-content: center;
 }
+
 .player-control-play-pause{
     height: 35px;
     width: 35px;
@@ -102,7 +104,7 @@
     height: 60%;
 }
 
-.track-time-info{
+.player-track-time-info{
     font-size: .7rem;
     color: #bbbbbb;
     margin: 5px;
