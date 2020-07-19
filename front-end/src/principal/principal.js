@@ -12,6 +12,7 @@ import reduxStore from "../redux/store/store.js";
 import { useSelector, Provider, useDispatch } from "react-redux";
 
 import { setQuery } from "../redux/slices/searchSlice.js";
+import AlbumPage from "./routes/Album/Album";
 
 const Topbar = () => {
 
@@ -79,6 +80,9 @@ const Body = ({ match, history, route }) => {
                 </Route>
                 <Route exact={true} path={`${match.url}/search`}>
                     <SearchPage />
+                </Route>
+                <Route exact={true} path={`${match.url}/album/:id`}>
+                    <AlbumPage />
                 </Route>
             </Switch>
 

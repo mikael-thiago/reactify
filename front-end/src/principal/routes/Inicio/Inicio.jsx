@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { getMyRecentlyPlayed, getMyTopArtists, getRefreshedToken, getNewReleases } from "../../../api-calls/api-calls";
 
-import { ContentItem, ArtistItem } from "../../components/ContentItem/ContentItem";
+import { TrackItem, ArtistItem, AlbumItem } from "../../components/ContentItem/ContentItem";
 
 import { getToken, login } from '../../../services/token_manipulation.js';
 
@@ -27,6 +27,7 @@ const Inicio = () => {
                 console.log(response.data.items);
 
                 getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
+                    console.log(responseTopArtists.data.items);
                     setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
                 });
             }).catch((erro) => {
@@ -38,6 +39,7 @@ const Inicio = () => {
                     getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
 
                         getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
+
                             setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
                         });
                     })
@@ -59,7 +61,7 @@ const Inicio = () => {
 
                 <div className="section-content">
                     {recentlyPlayed.map((item, index) => (
-                        <ContentItem key={index} name={item.track.name} photoUrl={item.track.album.images[0].url} artists={item.track.artists} trackUrl={item.track.preview_url} />
+                        <TrackItem key={index} name={item.track.name} photoUrl={item.track.album.images[0].url} artists={item.track.artists} trackUrl={item.track.preview_url} />
                     )
                     )
                     }
@@ -73,7 +75,7 @@ const Inicio = () => {
 
                 <div className="section-content">
                     {topArtists.map((item, index) => (
-                        <ArtistItem key={index} name={item.name} photoUrl={item.images[0].url} />
+                        <ArtistItem key={index} name={item.name} photoUrl={item.images[0].url} id={item.id} />
                     )
                     )
                     }

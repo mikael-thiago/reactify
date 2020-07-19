@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import { getSearchResult, getRefreshedToken } from "../../../api-calls/api-calls";
 
-import { ContentItem, ArtistItem } from "../../components/ContentItem/ContentItem";
+import { TrackItem, ArtistItem, AlbumItem } from "../../components/ContentItem/ContentItem";
 
 import "./search.css";
 import { getToken, login } from "../../../services/token_manipulation";
@@ -62,6 +62,8 @@ const SearchPage = () => {
     
     const renderAlbums = () => {
         
+        console.log(albums);
+        
         if (albums.length !== 0) {
             return (
                 <div className="section-wrapper">
@@ -75,7 +77,7 @@ const SearchPage = () => {
                     </span>
                     <div className="section-content" ref={albumSectionRef}>
                         {albums.map((album, index) => (
-                            <ContentItem key={index} name={album.name} photoUrl={album.images[0].url} artists={album.artists} />
+                            <AlbumItem key={index} name={album.name} photoUrl={album.images[0]?album.images[0].url: ""} artists={album.artists} id={album.id} />
                         ))}
                     </div>
                 </div>
@@ -106,7 +108,7 @@ const SearchPage = () => {
                     </span>
                     <div className="section-content" ref={tracksSectionRef}>
                         {tracks.map((track, index) => (
-                            <ContentItem key={index} name={track.name} photoUrl={track.album.images[0].url} artists={track.artists} trackUrl={track.preview_url} />
+                            <TrackItem key={index} name={track.name} photoUrl={track.album.images[0].url} artists={track.artists} trackUrl={track.preview_url} />
                         ))}
                     </div>
                 </div>
@@ -134,7 +136,7 @@ const SearchPage = () => {
                     </span>
                     <div className="section-content" ref={artistsSectionRef}>
                         {artists.map((artist, index) => (
-                            <ArtistItem key={index} name={artist.name} photoUrl={artist.images[0] !== undefined ? artist.images[0].url : ""} />
+                            <ArtistItem key={index} name={artist.name} photoUrl={artist.images[0] !== undefined ? artist.images[0].url : ""} id={artist.id} />
                         ))}
                     </div>
                 </div>

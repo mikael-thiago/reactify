@@ -12,7 +12,7 @@ export const playerSlice = createSlice({
         playing: true
     },
     reducers: {
-        setMusic: (state, action) => {
+        setTrack: (state, action) => {
             state.trackUrl = action.payload.trackUrl;
             state.photoUrl = action.payload.photoUrl;
             state.trackName = action.payload.trackName;
@@ -31,6 +31,6 @@ export const playerSlice = createSlice({
     }
 })
 
-export const { setMusic, setTime, setDuration, setPlaying } = playerSlice.actions;
+export const { setTrack, setTime, setDuration, setPlaying } = playerSlice.actions;
 
 export default playerSlice.reducer;

@@ -64,13 +64,13 @@
 }
 
 .player-timeline-actual{
-    height: 3px;
+    height: 4px;
     border-radius: 50px;
     background-color: #bbbbbb;
 }
 
 .player-timeline-restant{
-    height: 3px;
+    height: 4px;
     border-radius: 50px;
     background-color: #555555;
 }
@@ -101,7 +101,6 @@
     width: 60%;
     height: 60%;
 }
-
 
 .track-time-info{
     font-size: .7rem;

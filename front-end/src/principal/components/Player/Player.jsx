@@ -59,14 +59,16 @@ const Player = () => {
     const parseTime = (time) => {
         let hours = 0, minutes = 0, seconds = 0;
 
-        while (time > 60) {
+        if (time > 60) {
+
+            minutes = time / 60;
+
             time = time % 60;
 
-            minutes += 1;
 
-            if (minutes == 60) {
-                minutes = 0;
-                hours += 1;
+            if (minutes >= 60) {
+                hours = minutes / 60;
+                minutes = minutes % 60;
             }
         }
 
@@ -119,7 +121,7 @@ const Player = () => {
                     <div className="player-timeline-actual" style={{ width: (player.actualTime * 100 / player.duration) + "%" }}>
 
                     </div>
-                    <div className="player-timeline-restant" style={{ width: (100 - (player.actualTime * 100 / player.duration)) + "%" }}>
+                    <div className="player-timeline-restant" style={{ width: (100 - (player.actualTime * 100 / (player.duration === 0 ? 1 : player.duration))) + "%" }}>
 
                     </div>
 
@@ -132,6 +134,7 @@ const Player = () => {
             <div className="player-sound">
 
             </div>
+
         </div >
     )
 }
