@@ -12,7 +12,6 @@ refreshToken = (req, res) => {
     const refresh_token = req.params.refresh_token;
     const grant_type = "refresh_token";
 
-    console.log(refresh_token);
     var authOptions = {
         url: "https://accounts.spotify.com/api/token",
         form: {
@@ -32,12 +31,6 @@ refreshToken = (req, res) => {
 
             res.status(200).send({ access_token: access_token, refresh_token: refresh_token });
 
-            /*res.redirect("http://localhost:3000/?" +
-                querystring.stringify({
-                    access_token: access_token,
-                    refresh_token: refresh_token
-                })
-            );*/
         } else {
             res.status(200).send({ erro: erro });
         }
@@ -47,6 +40,7 @@ refreshToken = (req, res) => {
 
 authenticate = (req, res) => {
 
+    console.log(path.resolve(process.cwd(), "./src/.env"));
     // your application requests authorization
     var scopes = 'user-read-private user-read-email user-library-read user-read-recently-played user-top-read playlist-read-private playlist-read-collaborative';
     var strRed = 'https://accounts.spotify.com/authorize?' +
@@ -57,7 +51,6 @@ authenticate = (req, res) => {
             redirect_uri: redirect_uri
         });
 
-    console.log(strRed);
     res.redirect(strRed);
 
 }
