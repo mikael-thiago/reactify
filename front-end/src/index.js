@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import LoginPage from './login/login';
 import Principal from './principal/principal';
+import { getToken } from './services/token_manipulation';
+
+const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (getToken() !== null) setLoggedIn(true);
+  }, []);
+
+  return (
+    loggedIn ? <Principal setLoggedIn={setLoggedIn} /> : <LoginPage setLoggedIn={setLoggedIn} />
+  )
+}
 
 ReactDOM.render(
-  <Router>
-    <Switch>
-      <Route exact={true} path="/" component={LoginPage} />
-      <Route exact={false} path="/principal" component={Principal} />
-    </Switch>
-  </Router>,
+  <App />,
   document.getElementById('root')
 );
 

@@ -4,19 +4,35 @@ import "./login.css";
 import "../services/token_manipulation";
 import { getToken, login } from '../services/token_manipulation';
 
-const LoginCard = ({ search, history }) => {
+const LoginCard = ({ search, history, setLoggedIn }) => {
+
+    const getParams = (url) => {
+        let params = url.split("?")[1];
+
+        let retorno = {};
+
+        if (params) {
+            params = params.split("&");
+            for (var i = 0; i < params.length; i++) {
+                let [key, value] = params[i].split("=");
+                retorno[key] = value;
+            }
+        }
+
+        return retorno;
+
+    }
 
     useEffect(() => {
 
-        const params = new URLSearchParams(search);
-        const access_token = params.get("access_token");
-        const refresh_token = params.get("refresh_token");
+        let params = getParams(window.location.href);
 
-        if (access_token !== null) {
+        let access_token = params.access_token;
+        let refresh_token = params.refresh_token;
+
+        if (access_token !== null && access_token != undefined) {
             login(access_token, refresh_token);
-            history.push("/principal");
-        } else {
-            if (getToken() !== null) history.push("/principal");
+            setLoggedIn(true);
         }
 
     }, []);
@@ -41,9 +57,10 @@ const LoginCard = ({ search, history }) => {
 }
 
 const LoginPage = (props) => {
+
     return (
         <div className="login-wrapper">
-            <LoginCard search={props.location.search} history={props.history} />
+            <LoginCard setLoggedIn={props.setLoggedIn} />
             <div className="login-body">
 
             </div>
