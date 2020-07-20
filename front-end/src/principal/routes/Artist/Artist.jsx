@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./artist.css";
 import { useEffect } from "react";
-import { getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists } from "../../../api-calls/api-calls";
+import { getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists, getArtist } from "../../../api-calls/api-calls";
 import { getToken } from "../../../services/token_manipulation";
 import { withRouter, Link, Route } from "react-router-dom";
 
@@ -51,7 +51,9 @@ const TrackRow = ({ track = {} }) => {
 
     const albumPhotoUrl = (track.album.images[0]) ? track.album.images[0].url : "";
 
-    const musicDurationTime = () => {
+    console.log(track);
+
+    const trackDurationTime = () => {
         const duration_ms = track.duration_ms;
 
         let { hours, minutes, seconds } = parseDurationTime(duration_ms);
@@ -65,25 +67,25 @@ const TrackRow = ({ track = {} }) => {
         return hours + minutes + ":" + seconds;
     }
 
-    const playMusic = () => {
+    const playTrack = () => {
         dispatch(setTrack({ trackUrl: track.preview_url, photoUrl: albumPhotoUrl, trackName: track.name, trackArtists: track.artists }));
     }
 
     return (
         <div className="artist-track-row" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <div className="music-icon" onClick={playMusic}>
+            <div className="music-icon" onClick={playTrack}>
                 <img src={hover ? play : music}></img>
+            </div>
+            <div className="artist-track-row-album-photo">
+                <img src={track.album.images[0] ? track.album.images[0].url : ""} alt="" />
             </div>
             <div className="artist-track-text">
                 <div className="artist-track-name">
                     {track.name}
                 </div>
-                <div className="artist-track-artists">
-                    {track.artists.map((artist, index) => ((index === track.artists.length - 1) ? artist.name : artist.name + ", "))}
-                </div>
             </div>
             <div className="artist-track-duration">
-                {musicDurationTime()}
+                {trackDurationTime()}
             </div>
         </div>
     )
@@ -266,6 +268,31 @@ const ArtistViewSwitches = ({ id }) => {
     )
 }
 
+const ArtistInfoBanner = ({ id }) => {
+    const artistId = id;
+    const authorizationData = getToken();
+
+    const [artist, setArtist] = useState({});
+
+    useEffect(() => {
+        getArtist(authorizationData.access_token, artistId).then((response) => {
+            console.log(response.data);
+            setArtist(response.data);
+        })
+    }, []);
+
+    return (
+        <div className="artist-info">
+            <div className="artist-name">
+                {artist.name}
+            </div>
+            <div className="artist-followers">
+                {(artist.followers ? artist.followers.total : "") + " seguidores"}
+            </div>
+        </div>
+    )
+}
+
 const ArtistPage = ({ match }) => {
 
     const artistId = match.params.id;
@@ -273,9 +300,7 @@ const ArtistPage = ({ match }) => {
     return (
         <div className="artist-wrapper">
 
-            <div className="artist-info">
-
-            </div>
+            <ArtistInfoBanner id={artistId} />
 
             <ArtistViewSwitches id={artistId} />
 
