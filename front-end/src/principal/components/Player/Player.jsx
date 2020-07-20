@@ -4,7 +4,7 @@ import { setTime, setDuration, setPlaying } from "../../../redux/slices/playerSl
 import "./player.css";
 
 import pause from "../../../images/pause.svg";
-import play from "../../../images/play.svg";
+import play from "../../../images/play-player.svg";
 
 const PlayerController = () => {
     return (
