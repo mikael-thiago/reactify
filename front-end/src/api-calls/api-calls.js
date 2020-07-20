@@ -99,4 +99,55 @@ const getArtists = async (access_token, artists_id) => {
     return result;
 }
 
-export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult, getRefreshedToken, getNewReleases, getAlbum, getArtists };
+const getArtist = async (access_token, artist_id) => {
+    const result = (await axios.get("https://api.spotify.com/v1/artists/" + artist_id, {
+        headers: {
+            "Authorization": "Bearer " + access_token
+        }
+    }));
+
+    return result;
+}
+
+const getArtistTopTracks = async (access_token, artist_id, country_code) => {
+    const result = (await axios.get("https://api.spotify.com/v1/artists/" + artist_id + "/top-tracks?country=" + country_code, {
+        headers: {
+            "Authorization": "Bearer " + access_token
+        }
+    }));
+
+    return result;
+}
+
+const getArtistAlbums = async (access_token, artist_id, country_code, include_groups) => {
+    let retorno = [];
+
+    let result = { data: { next: "https://api.spotify.com/v1/artists/" + artist_id + "/albums?country=" + country_code + "&include_groups=" + (include_groups.map((include_group, index) => ((index === include_groups.length - 1) ? include_group : include_group + ","))) + "&limit=50" } };
+
+    do {
+        result = (await axios.get(result.data.next, {
+            headers: {
+                "Authorization": "Bearer " + access_token
+            }
+        }));
+
+        for (var i = 0; i < result.data.items.length; i++) {
+            retorno.push(result.data.items[i]);
+        }
+    } while (result.data.next !== null);
+
+    return retorno;
+}
+
+const getArtistRelatedArtists = async (access_token, artist_id) => {
+    const result = (await axios.get("https://api.spotify.com/v1/artists/" + artist_id + "/related-artists", {
+        headers: {
+            "Authorization": "Bearer " + access_token
+        }
+    }));
+
+    return result.data.artists;
+}
+
+
+export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult, getRefreshedToken, getNewReleases, getAlbum, getArtists, getArtist, getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists };
