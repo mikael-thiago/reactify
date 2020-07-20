@@ -3,33 +3,14 @@ import "./contentItem.css";
 import { setTrack } from "../../../redux/slices/playerSlice.js";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
-const ContentItem = ({ name = "", photoUrl = "", artists = {}, trackUrl = null }) => {
-
-    const dispatch = useDispatch();
-
-    return (
-        <div className="content-item" onClick={() => { dispatch(setTrack({ photoUrl: photoUrl, trackUrl: trackUrl, trackName: name, trackArtists: artists })); }}>
-            <div className="content-item-photo">
-                <img className="content-img" src={photoUrl} alt=""></img>
-            </div>
-            <div className="content-item-name">
-                {name}
-            </div>
-            <div className="content-item-subname">
-                {artists.map((artist, index) => ((artists.length - 1) === index ? artist.name : artist.name + ", ")
-                )}
-            </div>
-        </div>
-    )
-}
+import { setRoute } from "../../../redux/slices/routeSlice";
 
 const AlbumItem = ({ name = "", photoUrl = "", artists = {}, id }) => {
 
     const dispatch = useDispatch();
 
     return (
-        <Link to={"album/" + id} style={{ textDecoration: "none" }}>
+        <Link to={"/album/" + id} onClick={() => dispatch(setRoute("album"))} style={{ textDecoration: "none" }}>
             <div className="content-item">
                 <div className="content-item-photo">
                     <img className="content-img" src={photoUrl} alt=""></img>
@@ -71,8 +52,11 @@ const TrackItem = ({ name = "", photoUrl = "", artists = {}, trackUrl = null }) 
 }
 
 const ArtistItem = ({ name = "", photoUrl = "", id }) => {
+
+    const dispatch = useDispatch();
+
     return (
-        <Link to={"artista/" + id} style={{ textDecoration: "none" }}>
+        <Link to={"/artista/" + id} onClick={() => dispatch(setRoute("artist"))} style={{ textDecoration: "none" }}>
             <div className="content-item">
                 <div className="content-item-photo">
                     <img className="artist-img" src={photoUrl} alt=""></img>
