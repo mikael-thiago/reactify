@@ -89,7 +89,7 @@ const TrackRow = ({ track = {}, albumPhotoUrl = "" }) => {
     )
 }
 
-const AlbumPage = ({ match }) => {
+const AlbumPage = ({ match, history }) => {
 
     const albumId = match.params.id;
     const authorizationData = getToken();
@@ -136,7 +136,7 @@ const AlbumPage = ({ match }) => {
 
     const ArtistLink = ({ children, artist_id }) => {
         return (
-            <Link className="album-artist-link" to={"/principal/artista/" + artist_id} >
+            <Link className="album-artist-link" to={"/artista/" + artist_id} >
                 {children}
             </Link>
         );
