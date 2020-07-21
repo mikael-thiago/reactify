@@ -8,12 +8,6 @@
     align-items: center;
 }
 
-.section-wrapper{
-    display: flex;
-    flex-wrap: nowrap;
-    width: 95%;
-}
-
 .section-span{
     display: flex;
     flex-wrap: nowrap;

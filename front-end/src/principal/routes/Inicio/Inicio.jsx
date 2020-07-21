@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { getMyRecentlyPlayed, getMyTopArtists, getRefreshedToken, getNewReleases } from "../../../api-calls/api-calls";
 
@@ -7,6 +7,7 @@ import { TrackItem, ArtistItem, AlbumItem } from "../../components/ContentItem/C
 import { getToken, login } from '../../../services/token_manipulation.js';
 
 import "./inicio.css";
+import Section from "../../components/Section/Section";
 
 const Inicio = () => {
 
@@ -19,8 +20,6 @@ const Inicio = () => {
     useEffect(() => {
 
         if (authorizationData !== null) {
-
-            //getNewReleases(authorizationData.access_token);
 
             getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
 
@@ -54,39 +53,25 @@ const Inicio = () => {
 
         <div className="inicio-wrapper">
 
-            <div className="section-wrapper">
-                <div className="section-title">
-                    Tocado Recentemente
-                </div>
+            <Section title="Tocados Recentemente" >
+                {recentlyPlayed.map((item, index) => (
+                    <TrackItem key={index} name={item.track.name} photoUrl={item.track.album.images[0].url} artists={item.track.artists} trackUrl={item.track.preview_url} />
+                ))
+                }
+            </Section>
+            <Section title="Artistas favoritos">
+                {topArtists.map((item, index) => (
+                    <ArtistItem key={index} name={item.name} photoUrl={item.images[0].url} id={item.id} />
+                ))
+                }
+            </Section>
 
-                <div className="section-content">
-                    {recentlyPlayed.map((item, index) => (
-                        <TrackItem key={index} name={item.track.name} photoUrl={item.track.album.images[0].url} artists={item.track.artists} trackUrl={item.track.preview_url} />
-                    )
-                    )
-                    }
-                </div>
+            <div style={{ height: "100px" }}>
+
             </div>
 
-            <div className="section-wrapper">
-                <div className="section-title">
-                    Artistas Preferidos
-                </div>
+        </div >
 
-                <div className="section-content">
-                    {topArtists.map((item, index) => (
-                        <ArtistItem key={index} name={item.name} photoUrl={item.images[0].url} id={item.id} />
-                    )
-                    )
-                    }
-                </div>
-
-                <div style={{ height: "100px" }}>
-
-                </div>
-            </div>
-
-        </div>
     )
 }
 
