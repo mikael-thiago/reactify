@@ -42,7 +42,7 @@ authenticate = (req, res) => {
 
     console.log(path.resolve(process.cwd(), "./src/.env"));
     // your application requests authorization
-    var scopes = 'user-read-private user-read-email user-library-read user-read-recently-played user-top-read playlist-read-private playlist-read-collaborative';
+    var scopes = 'user-read-private user-read-email user-library-read user-read-recently-played user-top-read playlist-read-private playlist-read-collaborative user-follow-read';
     var strRed = 'https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
