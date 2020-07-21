@@ -12,14 +12,20 @@
     height: 40px;
     width: 90%;
     border-radius: 5px;
-    padding-left: 10px;
-    font-size: .8rem;
+    padding: 0 8px;
     margin: 1px 0px;
+    display: flex;
+    align-items: center;
     
 }
 
-.sidebar-body-navs {
+.sidebar-item-icon svg{
     width: 100%;
+    height: 100%;
+}
+
+.sidebar-body-navs {
+    width: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,14 +70,11 @@
     color: white;
 }
 
-
 .sidebar-item-name {
+    display: flex;
+    justify-content: left;
+    width: 100%;
     margin-left: 16px;
-}
-
-.sidebar-item-icon{
-    margin-left: 8px;
-    
 }
 
 .active {
@@ -91,12 +94,14 @@
     display: flex;
     justify-content: left;
     align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
 .sidebar-header img{
-    width: 150px;
-    height: 150px;
-    margin-left: 20px;
+    width: 70%;
+    height: 150%;
+    margin-left: 5%;
 }
 
 .sidebar-body{
@@ -110,7 +115,7 @@
 .sidebar-body-playlists{
     margin-top: 15px;
     margin-bottom: 8px;
-    width: 100%;
+    width: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -119,8 +124,6 @@
 .sidebar-body-playlists-title{
     color: #aaaaaa;
     font-weight: bold;
-    font-size: .9rem;
-    padding-left: 25px;
     margin: 5px 0;
     margin-bottom: 8px;
     width: 90%;
@@ -148,11 +151,43 @@
     white-space: nowrap;
     overflow: hidden;
     margin: 5px;
-    font-size: .9rem;
     font-weight: 600;
 }
 
 .sidebar-playlist-item:hover{
     color: white;
     cursor: pointer;
+}
+
+@media screen and (max-width: 800px){
+    .sidebar-item{
+        height: 30px;
+    }
+
+    .sidebar-item-icon svg{
+        width: 80%;
+        height: 80%;
+    }
+}
+
+@media screen and (max-width: 360px){
+    
+    .sidebar {
+        grid-template-rows: 35px 1fr;
+    }
+
+    .sidebar-item-icon svg{
+        width: 50%;
+        height: 50%;
+    }
+
+    .sidebar-item-name {
+        margin-left: 0px;
+    }
+
+    .sidebar-item > button svg {
+        width: 30%;
+        height: 50%;
+        margin: 0px 3px;
+    }
 }

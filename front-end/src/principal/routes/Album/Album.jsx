@@ -151,7 +151,7 @@ const AlbumPage = ({ match, history }) => {
                 </div>
                 <div className="album-info-text">
                     <div className="album-type">
-                        Álbum
+                        ÁLBUM
                     </div>
                     <div className="album-name">
                         {albumData.name}
@@ -185,10 +185,12 @@ const AlbumPage = ({ match, history }) => {
             </div>
 
             <div className="album-tracks-wrapper">
-                {albumData.tracks.items.map((track, index) => (<TrackRow track={track} albumPhotoUrl={albumData.images[0] ? albumData.images[0].url : ""} />))}
+                <div className="album-tracks">
+                    {albumData.tracks.items.map((track, index) => (<TrackRow track={track} albumPhotoUrl={albumData.images[0] ? albumData.images[0].url : ""} />))}
 
-                <div className="album-copyrights">
-                    {albumData.copyrights.map((copyright, index) => (<div>{copyright.text}</div>))}
+                    <div className="album-copyrights">
+                        {albumData.copyrights.map((copyright, index) => (<div>{copyright.text}</div>))}
+                    </div>
                 </div>
             </div>
 

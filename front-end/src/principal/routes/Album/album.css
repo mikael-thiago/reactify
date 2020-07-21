@@ -77,7 +77,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0px 35px;
+    width: 100%;
+}
+
+.album-tracks{
     width: 95%;
 }
 
@@ -110,14 +113,13 @@
 }
 
 .album-track-name{
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: bold;
 }
 
 .album-track-artists{
     font-size: .7rem;
-    color: #aaaaaa;
-    
+    color: #aaaaaa; 
 }
 
 .album-track-duration{
@@ -151,4 +153,89 @@
     font-size: .65rem;
     margin-top: 50px;
     margin-bottom: 30px;
+}
+
+@media screen and (max-width: 800px){
+    
+    .album-track-row{
+        height: 50px;
+    }
+
+    .album-track-name{
+        font-size: .8rem;
+    }
+
+    .album-track-artists{
+        font-size: .65rem;
+        color: #aaaaaa; 
+    }
+
+    .album-photo{
+        width: 160px;
+        height: 160px;
+        min-width: 160px;
+        min-height: 160px;
+        
+        margin-left: 25px;
+        margin-right: 3px;
+    }
+
+    .album-info-text{
+        
+        height: 160px;
+    }
+
+    .album-name{
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 360px){
+    
+    .album-track-row{
+        height: 50px;
+    }
+
+    .album-track-name{
+        font-size: .4rem;
+    }
+
+    .album-track-artists{
+        font-size: .4rem;
+        color: #aaaaaa; 
+    }
+
+    .album-photo{
+        width: 80px;
+        height: 80px;
+        min-width: 80px;
+        min-height: 80px;
+        margin-left: 15px;
+        margin-right: 3px;
+    }
+
+    .album-info-text{
+        
+        height: 80px;
+    }
+
+    .album-name{
+        font-size: 1rem;
+    }
+
+    .album-wrapper{
+        grid-area: main-view;
+    
+        display: grid;
+        grid-template-rows: 150px 1fr;
+        grid-template-areas: "album-info" "tracks-wrapper";
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: 100%;
+        width: 100%;
+    }
+
+    .album-type{
+        font-size: .4rem;
+    }
 }

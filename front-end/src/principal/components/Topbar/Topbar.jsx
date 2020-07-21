@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { setQuery } from "../../../redux/slices/searchSlice";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link, Switch, Route } from "react-router-dom";
 
 import "./topbar.css";
 import { useEffect } from "react";
@@ -55,43 +55,20 @@ const InputSearch = () => {
     );
 }
 
-const Topbar = ({ history }) => {
-
-    let SidebarAdition;
-
-    const search = useSelector((state) => state.search);
-    const route = useSelector((state) => state.route);
-
-    let timeout;
-
-    const dispatch = useDispatch();
-
-    const changeSearch = (e) => {
-        e.persist();
-
-        clearTimeout(timeout);
-
-        timeout = setTimeout(() => {
-            dispatch(setQuery({ query: e.target.value }));
-        }, 1000);
-    }
+const TopbarLink = withRouter(({ history, to = "", children }) => {
 
     useEffect(() => {
-        updateRoute();
-    }, [history.location.pathname])
 
-    const updateRoute = () => {
-        let splitedPathName = history.location.pathname.split("/");
-        let route = splitedPathName[splitedPathName.length - 1];
+    }, [history.location.pathname]);
 
-        if (route === "search") {
-            dispatch(setRoute({ route: "Buscar" }));
-        } else if (route === "#2") {
-            dispatch(setRoute({ route: "Sua Biblioteca" }));
-        } else {
-            dispatch(setRoute({ route: "Início" }));
-        }
-    }
+    return (
+        <Link to={to} className={"topbar-button " + (history.location.pathname === to ? "active" : "")}>
+            {children}
+        </Link>
+    )
+});
+
+const Topbar = ({ history }) => {
 
     const goBack = () => {
         history.goBack();
@@ -99,24 +76,6 @@ const Topbar = ({ history }) => {
 
     const goForward = () => {
         history.goForward();
-    }
-
-    if (route.route === "Buscar") {
-
-        SidebarAdition = () => (
-            <InputSearch />
-        );
-    } else if (route.route === "Sua Biblioteca") {
-        SidebarAdition = () => (
-            <div className="topbar-buttons">
-                <button className="topbar-button">Playlists</button>
-                <button className="topbar-button">Podcasts</button>
-                <button className="topbar-button">Artistas</button>
-                <button className="topbar-button">Álbuns</button>
-            </div>
-        );
-    } else {
-        SidebarAdition = () => (<></>);
     }
 
     return (
@@ -136,7 +95,27 @@ const Topbar = ({ history }) => {
                 </div>
             </div>
 
-            <SidebarAdition />
+            <Switch>
+                <Route path="/search">
+                    <InputSearch />
+                </Route>
+                <Route path="/collection">
+                    {() => {
+
+                        return (
+                            <div className="topbar-buttons">
+                                <TopbarLink to="/collection/playlists">Playlists</TopbarLink>
+                                <TopbarLink to="/collection/podcasts">Podcasts</TopbarLink>
+                                <TopbarLink to="/collection/artistas">Artistas</TopbarLink>
+                                <TopbarLink to="/collection/albuns">Álbuns</TopbarLink>
+                            </div>
+                        )
+                    }}
+                </Route>
+                <Route exact path="">
+                    {() => (<></>)}
+                </Route>
+            </Switch>
 
         </div>
     );

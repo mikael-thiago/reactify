@@ -13,16 +13,18 @@
 }
 
 .topbar-button{
-    background-color: #111111;
     height: 30px;
     width: 80px;
     border-radius: 5px;
-    border: none;
-    outline: none;
     margin: 0px 3px;
     color: white;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: none;
+    font-size: .85rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .topbar-button:hover{
@@ -88,4 +90,33 @@
     width: 80%;
     outline: none;
     border: none;
+}
+
+@media screen and (max-width: 360px){
+    .left-arrow{
+        background-color: black;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin: 10px 5px;
+        border: none;
+        cursor: pointer;
+        color: #aaaaaa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .right-arrow{
+        background-color: black;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin: 10px 5px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

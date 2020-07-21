@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import AlbumPage from "./routes/Album/Album";
 import Topbar from "./components/Topbar/Topbar";
 import ArtistPage from "./routes/Artist/Artist";
+import CollectionPage from "./routes/Collection/Collection";
 
 const Body = ({ match, history }) => {
 
@@ -22,6 +23,9 @@ const Body = ({ match, history }) => {
             <Switch>
                 <Route path={"/search"}>
                     <SearchPage />
+                </Route>
+                <Route path={"/collection"}>
+                    <CollectionPage />
                 </Route>
                 <Route path={"/album/:id"}>
                     <AlbumPage />
