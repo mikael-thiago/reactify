@@ -1,0 +1,22 @@
+
+
+.section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 95%;
+}
+
+.section-title{
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 8px;
+}
+
+.section-content{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
+    
+    overflow: hidden;
+}
