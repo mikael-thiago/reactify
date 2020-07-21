@@ -18,6 +18,18 @@ const getMyAlbuns = async (access_token, refresh_token) => {
     return result;
 }
 
+const getMyArtists = async (access_token) => {
+    let result;
+
+    result = await (axios.get("https://api.spotify.com/v1/me/following?type=artist", {
+        headers: {
+            "Authorization": "Bearer " + access_token
+        }
+    }));
+
+    return result;
+}
+
 const getNewReleases = async (access_token) => {
     const result = await (axios.get("https://api.spotify.com/v1/browse/new-releases", {
         headers: {
@@ -149,5 +161,14 @@ const getArtistRelatedArtists = async (access_token, artist_id) => {
     return result.data.artists;
 }
 
+const getMyShows = async (access_token) => {
+    const result = (await axios.get("https://api.spotify.com/v1/me/shows", {
+        headers: {
+            "Authorization": "Bearer " + access_token
+        }
+    }));
 
-export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult, getRefreshedToken, getNewReleases, getAlbum, getArtists, getArtist, getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists };
+    return result;
+}
+
+export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult, getRefreshedToken, getNewReleases, getAlbum, getArtists, getArtist, getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists, getMyShows, getMyArtists };
