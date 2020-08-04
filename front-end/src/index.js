@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import LoginPage from './login/login';
-import Principal from './principal/principal';
+import LoginPage from './pages/login/login'
+import Principal from './pages/principal/principal';
 import { getToken } from './services/token_manipulation';
 
 const App = () => {

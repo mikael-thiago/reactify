@@ -1,0 +1,9 @@
+.search-wrapper{
+    grid-area: main-view;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    align-items: center;
+}

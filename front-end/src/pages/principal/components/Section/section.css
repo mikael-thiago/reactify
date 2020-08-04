@@ -1,0 +1,56 @@
+.section{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 95%;
+}
+
+.section-span{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.section-span button{
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #111111;
+    color: #aaaaaa;
+}
+
+.section-title{
+    color: white;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 8px;
+}
+
+.section-content{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
+    max-height: 250px;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 800px){
+    .section-content{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        
+        overflow: hidden;
+        max-height: 185px;
+    }
+}
+
+@media screen and (max-width: 450px){
+    
+    .section-content{
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+        
+        overflow: hidden;
+        max-height: 105px;
+    }
+}
