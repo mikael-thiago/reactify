@@ -53,7 +53,7 @@ const Inicio = () => {
 
         <div className="inicio-wrapper">
 
-            <Section title="Tocados Recentemente" >
+            <Section rowsToShow={1} title="Tocados Recentemente" >
                 {recentlyPlayed.map((item, index) => (
                     <TrackItem key={index} name={item.track.name} photoUrl={item.track.album.images[0].url} artists={item.track.artists} trackUrl={item.track.preview_url} />
                 ))

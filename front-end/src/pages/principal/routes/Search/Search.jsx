@@ -46,7 +46,7 @@ const SearchPage = withRouter(({ match }) => {
 
         if (albums.length !== 0) {
             return (
-                <Section title="Álbuns" showMore>
+                <Section rowsToShow={1} title="Álbuns" showMore>
                     {albums.map((album, index) => (
                         <AlbumItem key={index} name={album.name} photoUrl={album.images[0] ? album.images[0].url : ""} artists={album.artists} id={album.id} />
                     ))}
@@ -64,7 +64,7 @@ const SearchPage = withRouter(({ match }) => {
 
         if (tracks.length !== 0) {
             return (
-                <Section title="Tracks" showMore>
+                <Section rowsToShow={1} title="Tracks" showMore>
                     {tracks.map((track, index) => (
                         <TrackItem key={index} name={track.name} photoUrl={track.album.images[0].url} artists={track.artists} trackUrl={track.preview_url} />
                     ))}
@@ -81,7 +81,7 @@ const SearchPage = withRouter(({ match }) => {
     const renderArtists = () => {
         if (artists.length !== 0) {
             return (
-                <Section title="Artistas" showMore>
+                <Section rowsToShow={1} title="Artistas" showMore>
                     {artists.map((artist, index) => (
                         <ArtistItem key={index} name={artist.name} photoUrl={artist.images[0] !== undefined ? artist.images[0].url : ""} id={artist.id} />
                     ))}
