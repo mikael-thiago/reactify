@@ -102,7 +102,7 @@ const getAlbum = async (access_token, album_id) => {
 }
 
 const getArtists = async (access_token, artists_id) => {
-    const result = (await axios.get("https://api.spotify.com/v1/artists?ids=" + (artists_id.map((artist_id, index) => ((index == artists_id - 1) ? artist_id : artist_id + ","))), {
+    const result = (await axios.get("https://api.spotify.com/v1/artists?ids=" + (artists_id.map((artist_id, index) => ((index === artists_id - 1) ? artist_id : artist_id + ","))), {
         headers: {
             "Authorization": "Bearer " + access_token
         }

@@ -3,15 +3,11 @@ import { withRouter } from "react-router";
 
 import "./album.css";
 
-import { getAlbum, getArtists } from "../../../../api-calls/api-calls.js";
+import { getAlbum } from "../../../../api-calls/api-calls.js";
 import { getToken } from "../../../../services/token_manipulation";
+import TrackRow from "../../components/TrackRow/TrackRow";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
-import { setTrack } from "../../../../redux/slices/playerSlice";
-import ArtistLink from "./Components/ArtistLink/ArtistLink";
-import AlbumTrackRow from "./Components/AlbumTrackRow/AlbumTrackRow";
-import { AlbumItem } from "../../components/ContentItem/ContentItem";
 
 const parseDurationTime = (ms) => {
 
@@ -42,6 +38,14 @@ const parseDurationTime = (ms) => {
 
     return { hours: hours, minutes: minutes, seconds: seconds };
 
+}
+
+const ArtistLink = ({ children, artist_id }) => {
+    return (
+        <Link className="album-artist-link" to={"/artista/" + artist_id} >
+            {children}
+        </Link>
+    );
 }
 
 const AlbumInfoBanner = ({ albumData }) => {
@@ -141,7 +145,12 @@ const AlbumPage = ({ match }) => {
 
             <div className="album-tracks-wrapper">
                 <div className="album-tracks">
-                    {albumData.tracks.items.map((track, index) => (<AlbumTrackRow track={track} albumPhotoUrl={albumData.images[0] ? albumData.images[0].url : ""} />))}
+
+                    {albumData.tracks.items.map((track, index) => {
+                        track.album = albumData;
+
+                        return <TrackRow showArtists track={track} key={index} />
+                    })}
 
                     <footer className="album-copyrights">
                         {albumData.copyrights.map((copyright, index) => (<text>{copyright.text}</text>))}

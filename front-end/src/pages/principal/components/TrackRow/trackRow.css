@@ -1,0 +1,52 @@
+
+.track-row{
+    display: flex;
+    height: 60px;
+    width: 100%;
+    align-items: center;
+}
+
+.track-row:hover{
+    background-color: #282828;
+}
+
+.music-icon{
+    width: 20px;
+    height: 20px;
+    margin: 0px 10px;
+}
+
+.music-icon img{
+    height: 100%;
+    width: 100%;
+}
+
+.track-name-artists{
+    margin: 0px 10px;
+    width: 100%;
+}
+
+.track-text{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.track-name{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+}
+
+.track-artists{
+    font-size: 1em;
+    color: #aaaaaa; 
+}
+
+.track-duration{
+    color: inherit;
+    font-weight: bold;
+    height: 100%;
+
+    margin: 0px 10px;
+}

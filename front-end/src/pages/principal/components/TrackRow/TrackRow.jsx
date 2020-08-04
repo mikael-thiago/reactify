@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setTrack } from "../../../../../../redux/slices/playerSlice";
+import { setTrack } from "../../../../redux/slices/playerSlice.js";
 
-import music from "../../../../../../images/musica.svg";
-import play from "../../../../../../images/play.svg";
+import music from "../../../../images/musica.svg";
+import play from "../../../../images/play.svg";
+
+import "./trackRow.css";
 
 const parseDurationTime = (ms) => {
 
@@ -36,7 +38,7 @@ const parseDurationTime = (ms) => {
 
 }
 
-const AlbumTrackRow = ({ track = {}, albumPhotoUrl = "" }) => {
+const TrackRow = ({ track = {}, albumPhotoUrl = "", showArtists = false, showImage = false }) => {
 
     const [hover, setHover] = useState(false);
 
@@ -57,24 +59,33 @@ const AlbumTrackRow = ({ track = {}, albumPhotoUrl = "" }) => {
     }
 
     const playMusic = () => {
-        dispatch(setTrack({ trackUrl: track.preview_url, photoUrl: albumPhotoUrl, trackName: track.name, trackArtists: track.artists }));
+        dispatch(setTrack({ trackUrl: track.preview_url, photoUrl: (track.album.images[0] ? track.album.images[0].url : ""), trackName: track.name, trackArtists: track.artists }));
     }
 
     return (
-        <div className="album-track-row" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+        <div className="track-row" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             <div className="music-icon" onClick={playMusic}>
                 <img src={hover ? play : music}></img>
             </div>
-            <div className="album-track-text">
-                <div className="album-track-name-artists">
-                    <div className="album-track-name">
+
+            {showImage && track.album.images[0] ?
+                (<div className="track-row-album-photo">
+                    <img src={track.album.images[0].url} alt="" />
+                </div>) :
+                <></>
+            }
+
+            <div className="track-text">
+                <div className="track-name-artists">
+                    <div className="track-name">
                         {track.name}
                     </div>
-                    <div className="album-track-artists">
-                        {track.artists.map((artist, index) => ((index === track.artists.length - 1) ? artist.name : artist.name + ", "))}
-                    </div>
+                    {showArtists ?
+                        (<div className="track-artists">
+                            {track.artists.map((artist, index) => ((index === track.artists.length - 1) ? artist.name : artist.name + ", "))}
+                        </div>) : <></>}
                 </div>
-                <div className="album-track-duration">
+                <div className="track-duration">
                     {musicDurationTime()}
                 </div>
             </div>
@@ -82,4 +93,4 @@ const AlbumTrackRow = ({ track = {}, albumPhotoUrl = "" }) => {
     )
 }
 
-export default AlbumTrackRow;
+export default TrackRow;

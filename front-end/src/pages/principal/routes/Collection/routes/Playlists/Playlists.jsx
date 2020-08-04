@@ -15,7 +15,6 @@ const PlaylistView = () => {
 
     useEffect(() => {
         getMyPlaylists(authorizationData.access_token).then((response) => {
-            console.log(response.data.items);
             setPlaylists(response.data.items);
         });
 

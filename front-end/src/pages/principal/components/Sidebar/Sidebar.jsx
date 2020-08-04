@@ -58,19 +58,19 @@ const Sidebar = ({ setLoggedIn }) => {
                     <SidebarLink id="collection" name="Sua Biblioteca" to={"/collection/playlists"} xmlns="http://www.w3.org/2000/svg" d="M311.873 77.46l166.349 373.587-39.111 17.27-166.349-373.587zM64 463.746v-384h42.666v384h-42.666zM170.667 463.746v-384h42.667v384h-42.666z" />
                 </nav>
                 <div className="sidebar-body-playlists">
-                    <text className="sidebar-body-playlists-title">
+                    <div className="sidebar-body-playlists-title">
                         PLAYLISTS
-                    </text>
+                    </div>
 
                     <div className="sidebar-body-playlists-items">
 
                         <div className={"sidebar-item"}>
                             <button>
-                                <svg className="sidebar-item-icon" shapeRendering="crispEdges" style={{ backgroundColor: "currentColor", padding: "4px" }} shapeRendering="crispEdges" viewBox="0 0 36 36" width="26" height="26"><path d="m28 20h-8v8h-4v-8h-8v-4h8v-8h4v8h8v4z">                                </path>
+                                <svg className="sidebar-item-icon" shapeRendering="crispEdges" style={{ backgroundColor: "currentColor", padding: "4px", fill: "black" }} shapeRendering="crispEdges" viewBox="0 0 36 36" width="26" height="26"><path d="m28 20h-8v8h-4v-8h-8v-4h8v-8h4v8h8v4z"></path>
                                 </svg>
-                                <text className="sidebar-item-name">
+                                <div className="sidebar-item-name">
                                     Criar playlist
-                                </text>
+                                </div>
                             </button>
                         </div>
 

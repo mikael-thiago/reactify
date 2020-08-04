@@ -5,102 +5,10 @@ import { getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists, getArtist
 import { getToken } from "../../../../services/token_manipulation";
 import { withRouter, Link, Route } from "react-router-dom";
 
-import play from "../../../../images/play.svg";
-import music from "../../../../images/musica.svg";
-import { useSelector, useDispatch } from "react-redux";
-import { setTrack } from "../../../../redux/slices/playerSlice";
 import { ArtistItem } from "../../components/ContentItem/ContentItem";
+import Section from "../../components/Section/Section";
+import TrackRow from "../../components/TrackRow/TrackRow.jsx"
 
-const parseDurationTime = (ms) => {
-
-    const HOUR_IN_MS = 3600000;
-    const MINUTES_IN_MS = 60000;
-    const SECONDS_IN_MS = 1000;
-
-    let hours = 0, minutes = 0, seconds = 0;
-
-    if (ms > HOUR_IN_MS) {
-        hours = (ms / HOUR_IN_MS);
-        ms = ms % HOUR_IN_MS;
-    }
-
-    if (ms > MINUTES_IN_MS) {
-        minutes += ms / MINUTES_IN_MS;
-        ms = ms % MINUTES_IN_MS;
-    }
-
-    if (ms > SECONDS_IN_MS) {
-        seconds += ms / SECONDS_IN_MS;
-        ms = ms % SECONDS_IN_MS;
-    }
-
-    hours = parseInt(hours);
-    minutes = parseInt(minutes);
-    seconds = parseInt(seconds);
-
-    return { hours: hours, minutes: minutes, seconds: seconds };
-
-}
-
-const TrackRow = ({ track = {} }) => {
-
-    const [hover, setHover] = useState(false);
-
-    const player = useSelector((state) => state.player);
-    const dispatch = useDispatch();
-
-    const albumPhotoUrl = (track.album.images[0]) ? track.album.images[0].url : "";
-
-    console.log(track);
-
-    const trackDurationTime = () => {
-        const duration_ms = track.duration_ms;
-
-        let { hours, minutes, seconds } = parseDurationTime(duration_ms);
-
-        seconds = (seconds > 9) ? seconds : "0" + seconds;
-
-        minutes = (minutes > 9) ? minutes : "0" + minutes;
-
-        hours = (hours > 0) ? hours + ":" : "";
-
-        return hours + minutes + ":" + seconds;
-    }
-
-    const playTrack = () => {
-        dispatch(setTrack({ trackUrl: track.preview_url, photoUrl: albumPhotoUrl, trackName: track.name, trackArtists: track.artists }));
-    }
-
-    return (
-        <div className="artist-track-row" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <div className="music-icon" onClick={playTrack}>
-                <img src={hover ? play : music}></img>
-            </div>
-            <div className="artist-track-row-album-photo">
-                <img src={track.album.images[0] ? track.album.images[0].url : ""} alt="" />
-            </div>
-            <div className="artist-track-text">
-                <div className="artist-track-name">
-                    {track.name}
-                </div>
-            </div>
-            <div className="artist-track-duration">
-                {trackDurationTime()}
-            </div>
-        </div>
-    )
-}
-
-const Section = ({ title, children }) => {
-    return (
-        <div className="artist-section">
-            <div className="artist-section-title">
-                {title}
-            </div>
-            {children}
-        </div>
-    )
-}
 
 const AlbumItem = ({ album }) => {
     const albumId = album.id, albumName = album.name, albumPhotoUrl = ((album.images[0]) ? album.images[0].url : "");
@@ -171,51 +79,47 @@ const MainArtistView = ({ id }) => {
 
     return (
         <>
-            <Section title={"Populares"}>
-                <div className="artist-tracks-wrapper">
-                    {topTracks.map((track, index) => (
-                        <TrackRow track={track} key={index} />
-                    ))}
-                </div>
+            <Section row title={"Populares"}>
+                {topTracks.map((track, index) => (
+                    <TrackRow showArtists track={track} key={index} />
+                ))}
             </Section>
 
             {data.albums.albums.length > 0 ?
-                <Section title={"Álbuns"}>
-                    <div className="artist-albuns-wrapper">
-                        {data.albums.albums.map((album, index) => (
-                            <AlbumItem album={album} key={index} />
-                        ))}
-                    </div>
+                <Section rowsToShow={2} title={"Álbuns"}>
+                    {data.albums.albums.map((album, index) => (
+                        <AlbumItem album={album} key={index} />
+                    ))}
                 </Section> : <></>
             }
 
             {data.albums.singles.length > 0 ?
-                <Section title={"Singles e EPs"}>
-                    <div className="artist-albuns-wrapper">
-                        {data.albums.singles.map((single, index) => (
-                            <AlbumItem album={single} key={index} />
-                        ))}
-                    </div>
+                <Section rowsToShow={2} title={"Singles e EPs"}>
+
+                    {data.albums.singles.map((single, index) => (
+                        <AlbumItem album={single} key={index} />
+                    ))}
+
                 </Section> : <></>
             }
 
             {data.albums.compilations.length > 0 ?
-                <Section title={"Compilações"}>
-                    <div className="artist-albuns-wrapper">
-                        {data.albums.compilations.map((compilation, index) => (
-                            <AlbumItem album={compilation} key={index} />
-                        ))}
-                    </div>
+                <Section rowsToShow={2} title={"Compilações"}>
+
+                    {data.albums.compilations.map((compilation, index) => (
+                        <AlbumItem album={compilation} key={index} />
+                    ))}
+
                 </Section> : <></>
             }
 
             {data.albums.appears_on.length > 0 ?
-                <Section title={"Aparece em"}>
-                    <div className="artist-albuns-wrapper">
-                        {data.albums.appears_on.map((appears_on, index) => (
-                            <AlbumItem album={appears_on} key={index} />
-                        ))}
-                    </div>
+                <Section rowsToShow={2} title={"Aparece em"}>
+
+                    {data.albums.appears_on.map((appears_on, index) => (
+                        <AlbumItem album={appears_on} key={index} />
+                    ))}
+
                 </Section> : <> </>
             }
         </>
@@ -230,7 +134,6 @@ const ArtistRelatedArtistsView = ({ id }) => {
 
     useEffect(() => {
         getArtistRelatedArtists(authorizationData.access_token, artistId).then((response) => {
-            console.log(response);
             setRelatedArtists(response);
         });
     }, [])

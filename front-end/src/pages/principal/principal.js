@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import "./principal.css";
 
@@ -15,7 +15,7 @@ import Topbar from "./components/Topbar/Topbar";
 import ArtistPage from "./routes/Artist/Artist";
 import CollectionPage from "./routes/Collection/Collection";
 
-const Body = ({ match, history }) => {
+const Body = () => {
 
     return (
         <div className="body">

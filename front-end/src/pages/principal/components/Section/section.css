@@ -1,7 +1,6 @@
 .section{
     display: flex;
     flex-direction: column;
-    flex-wrap: nowrap;
     width: 95%;
 }
 
@@ -28,10 +27,21 @@
 }
 
 .section-content{
+    overflow: hidden;
+    transition: .3s;
+}
+
+.column-content {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(164px, 1fr));
-    max-height: 250px;
-    overflow: hidden;
+}
+
+.row-content{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
 }
 
 @media screen and (max-width: 800px){

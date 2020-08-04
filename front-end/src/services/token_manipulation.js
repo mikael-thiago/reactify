@@ -7,6 +7,11 @@ const login = (access_token, refresh_token) => {
     localStorage.setItem(refresh_token_key, refresh_token);
 }
 
+const setToken = (access_token) => {
+
+    localStorage.setItem(token_key, access_token);
+}
+
 const logout = () => {
     localStorage.setItem(token_key, null);
     localStorage.setItem(refresh_token_key, null);
@@ -19,4 +24,4 @@ const getToken = () => {
     return null;
 }
 
-export { login, logout, getToken };
+export { login, logout, getToken, setToken };

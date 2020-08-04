@@ -84,69 +84,6 @@
     overflow-y: hidden;
 }
 
-.artist-track-row{
-    display: flex;
-    color: white;
-    height: 60px;
-    width: 100%;
-    align-items: center;
-}
-
-.artist-track-row:hover{
-    background-color: #282828;
-}
-
-.artist-track-row-album-photo{
-    width: 50px;
-    height: 50px;
-    
-    min-width: 50px;
-    min-height: 50px;
-}
-
-
-.artist-track-row-album-photo *{
-    width: 100%;
-    height: 100%;
-}
-
-.music-icon{
-    width: 20px;
-    height: 20px;
-    margin: 0px 10px;
-}
-
-.music-icon img{
-    height: 100%;
-    width: 100%;
-}
-
-.artist-track-text{
-    margin: 0px 10px;
-    width: 100%;
-}
-
-.artist-track-name{
-    font-size: 1em;
-    font-weight: bold;
-}
-
-.artist-track-artists{
-    font-size: .7em;
-    color: #aaaaaa;
-    
-}
-
-.artist-track-duration{
-    color: #aaaaaa;
-    font-weight: bold;
-    height: 100%;
-
-    margin: 0px 10px;
-    padding-top: 10px;
-}
-
-
 .artist-info{
     grid-area: artist-info;
     height: 100%;
@@ -232,11 +169,11 @@
         margin: 3px;
     }
 
-    .artist-track-row{
+    .track-row{
         height: 30px;
     }
 
-    .artist-track-row-album-photo{
+    .track-row-album-photo{
         width: 25px;
         height: 25px;
         

@@ -10,7 +10,9 @@ body{
     height: 100%;
     overflow: hidden;
     background-color: #111111;
+    color: #aaaaaa;
     font-size: 14px;
+    fill: currentColor;
 }
 
 .principal-wrapper{

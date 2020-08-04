@@ -1,7 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import "./section.css";
+import { useState } from "react";
+import { useLayoutEffect } from "react";
 
-const Section = ({ children, options = { showMore: false }, title = "" }) => {
+
+const Section = ({ children, showMore = false, row = false, title = "", rowsToShow }) => {
+
     const buttonRef = useRef(), sectionRef = useRef();
 
     const toggleSectionWrap = (ref, buttonRef) => {
@@ -14,19 +18,28 @@ const Section = ({ children, options = { showMore: false }, title = "" }) => {
         }
     }
 
+    useEffect(() => {
+        const child = sectionRef.current.children.item(0);
+
+        if (child && rowsToShow) {
+            sectionRef.current.style.maxHeight = ((parseInt(getComputedStyle(child).height) + parseInt(getComputedStyle(child).marginTop) + parseInt(getComputedStyle(child).marginBottom)) * rowsToShow) + "px";
+            console.log(sectionRef.current.style.maxHeight);
+        }
+    }, [])
+
     return (
         <section className="section">
             <span className="section-span">
-                <text className="section-title">
+                <div className="section-title">
                     {title}
-                </text>
-                {options.showMore ? (
+                </div>
+                {showMore ? (
                     <button ref={buttonRef} onClick={() => toggleSectionWrap(sectionRef, buttonRef)}>
                         VER TUDO
                     </button>) : (<></>)
                 }
             </span>
-            <div className="section-content" ref={sectionRef}>
+            <div className={"section-content " + (row ? "row-content" : "column-content")} ref={sectionRef}>
                 {children}
             </div>
         </section>

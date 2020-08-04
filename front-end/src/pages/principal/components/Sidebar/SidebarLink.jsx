@@ -37,9 +37,9 @@ const SidebarLink = ({ name, to = "", xmlns = "", d = "", id = null, history }) 
                 </path>
                 </svg>
             </i>
-            <text className="sidebar-item-name">
+            <div className="sidebar-item-name">
                 {name}
-            </text>
+            </div>
         </Link>
     );
 }

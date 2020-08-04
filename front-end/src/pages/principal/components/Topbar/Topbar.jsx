@@ -1,7 +1,5 @@
 import React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
-
 import { withRouter, Link, Switch, Route } from "react-router-dom";
 
 import "./topbar.css";
@@ -19,11 +17,13 @@ const InputSearch = ({ history, match }) => {
 
         setInputQuery(e.target.value);
 
-        clearTimeout(timeout);
+        if (timeout)
+            clearTimeout(timeout);
 
         timeout = setTimeout(() => {
             history.push("/search/" + e.target.value);
-        }, 1000);
+            console.log(timeout);
+        }, 1500);
     }
 
     return (

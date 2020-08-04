@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import "./login.css";
 
 import "../../services/token_manipulation";
-import { getToken, login } from '../../services/token_manipulation';
+import { login } from '../../services/token_manipulation';
 
-const LoginCard = ({ search, history, setLoggedIn }) => {
+const LoginCard = ({ setLoggedIn }) => {
 
     const getParams = (url) => {
         let params = url.split("?")[1];

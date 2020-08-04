@@ -84,58 +84,6 @@
     width: 95%;
 }
 
-.album-track-row{
-    display: flex;
-    color: white;
-    height: 60px;
-    width: 100%;
-    align-items: center;
-}
-
-.album-track-row:hover{
-    background-color: #282828;
-}
-
-.music-icon{
-    width: 20px;
-    height: 20px;
-    margin: 0px 10px;
-}
-
-.music-icon img{
-    height: 100%;
-    width: 100%;
-}
-
-.album-track-name-artists{
-    margin: 0px 10px;
-    width: 100%;
-}
-
-.album-track-text{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.album-track-name{
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.album-track-artists{
-    font-size: 1em;
-    color: #aaaaaa; 
-}
-
-.album-track-duration{
-    color: #aaaaaa;
-    font-weight: bold;
-    height: 100%;
-
-    margin: 0px 10px;
-}
-
 .album-artists{
     display: flex;
 }
@@ -162,18 +110,9 @@
 
 @media screen and (max-width: 800px){
     
-    .album-track-row{
+    .track-row{
         height: 50px;
     }
-
-    /*.album-track-name{
-        font-size: .8rem;
-    }
-
-    .album-track-artists{
-        font-size: .65rem;
-        color: #aaaaaa; 
-    }*/
 
     .album-photo{
         width: 160px;
@@ -190,9 +129,6 @@
         height: 160px;
     }
 
-    /*.album-name{
-        font-size: 2.5rem;
-    }*/
 }
 
 @media screen and (max-width: 450px){
@@ -200,15 +136,6 @@
     .album-track-row{
         height: 50px;
     }
-
-    /*.album-track-name{
-        font-size: .4rem;
-    }
-
-    .album-track-artists{
-        font-size: .4rem;
-        color: #aaaaaa; 
-    }*/
 
     .album-photo{
         width: 80px;
@@ -224,10 +151,6 @@
         height: 80px;
     }
 
-    /*.album-name{
-        font-size: 1rem;
-    }*/
-
     .album-wrapper{
         grid-area: main-view;
     
@@ -239,8 +162,4 @@
         height: 100%;
         width: 100%;
     }
-
-    /*.album-type{
-        font-size: .4rem;
-    }*/
 }

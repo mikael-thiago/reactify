@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
-import { getMyRecentlyPlayed, getMyTopArtists, getRefreshedToken, getNewReleases } from "../../../../api-calls/api-calls";
+import { getMyRecentlyPlayed, getMyTopArtists, getRefreshedToken } from "../../../../api-calls/api-calls";
 
-import { TrackItem, ArtistItem, AlbumItem } from "../../components/ContentItem/ContentItem";
+import { TrackItem, ArtistItem } from "../../components/ContentItem/ContentItem";
 
 import { getToken, login } from '../../../../services/token_manipulation.js';
 
