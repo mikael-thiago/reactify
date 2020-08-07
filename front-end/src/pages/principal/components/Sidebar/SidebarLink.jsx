@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
 
-const SidebarLink = ({ name, to = "", xmlns = "", d = "", id = null, history }) => {
+
+const SidebarLink = ({ name, to = "/on", xmlns = "", d = "", id = null, history }) => {
 
     const [active, setActive] = useState(false);
 
@@ -12,7 +11,7 @@ const SidebarLink = ({ name, to = "", xmlns = "", d = "", id = null, history }) 
     useEffect(() => {
         let splitedPathName = history.location.pathname.split("/");
 
-        if (id !== "") {
+        if (id !== "on") {
             if (splitedPathName.includes(id)) {
                 setActive(true);
             } else {
@@ -22,13 +21,13 @@ const SidebarLink = ({ name, to = "", xmlns = "", d = "", id = null, history }) 
             let activate = true;
 
             for (var index in splitedPathName) {
-                if (splitedPathName[index] !== "") activate = false;
+                if (splitedPathName[index] !== "on" && splitedPathName[index] !== "") activate = false;
             }
 
             setActive(activate);
         }
 
-    }, [history.location.pathname])
+    }, [history.location.pathname, id])
 
     return (
         <Link className={"sidebar-item" + activeClass} to={to}>

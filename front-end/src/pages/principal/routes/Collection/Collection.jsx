@@ -12,16 +12,16 @@ const CollectionPage = () => {
     return (
         <div className="collection-wrapper">
             <Switch>
-                <Route exact={true} path="/collection/playlists">
+                <Route exact={true} path="/on/collection/playlists">
                     <PlaylistView />
                 </Route>
-                <Route path="/collection/podcasts">
+                <Route path="/on/collection/podcasts">
                     <PodcastsView />
                 </Route>
-                <Route path="/collection/artistas">
+                <Route path="/on/collection/artistas">
                     <ArtistsView />
                 </Route>
-                <Route path="/collection/albuns">
+                <Route path="/on/collection/albuns">
                     <AlbunsView />
                 </Route>
             </Switch>

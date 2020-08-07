@@ -39,7 +39,7 @@
 
 .arrows{
     height: 100%;
-    width: 13%;
+    min-width: 150px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -48,8 +48,8 @@
 
 .left-arrow{
     background-color: black;
-    width: 35px;
-    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
     border-radius: 50%;
     margin: 15px 10px;
     border: none;
@@ -62,8 +62,8 @@
 
 .right-arrow{
     background-color: black;
-    width: 35px;
-    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
     border-radius: 50%;
     margin: 15px 10px;
     border: none;

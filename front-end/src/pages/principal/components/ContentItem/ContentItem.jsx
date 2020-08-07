@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const PlaylistItem = ({ playlist }) => {
 
     return (
-        <Link to={"/playlist/" + playlist.id} style={{ textDecoration: "none" }}>
+        <Link to={"/on/playlist/" + playlist.id} style={{ textDecoration: "none" }}>
             <div className="content-item">
                 <div className="content-item-photo">
                     <img className="content-img" src={playlist.images[0] ? playlist.images[0].url : ""} alt=""></img>
@@ -28,7 +28,7 @@ const ShowItem = ({ showData }) => {
     const show = showData.show;
 
     return (
-        <Link to={"/podcasts/" + show.id} style={{ textDecoration: "none" }}>
+        <Link to={"/on/podcasts/" + show.id} style={{ textDecoration: "none" }}>
             <div className="content-item">
                 <div className="content-item-photo">
                     <img className="content-img" src={show.images[0] ? show.images[0].url : ""} alt=""></img>
@@ -47,7 +47,7 @@ const ShowItem = ({ showData }) => {
 const AlbumItem = ({ name = "", photoUrl = "", artists = {}, id }) => {
 
     return (
-        <Link to={"/album/" + id} style={{ textDecoration: "none" }}>
+        <Link to={"/on/album/" + id} style={{ textDecoration: "none" }}>
             <div className="content-item">
                 <div className="content-item-photo">
                     <img className="content-img" src={photoUrl} alt=""></img>
@@ -91,7 +91,7 @@ const TrackItem = ({ name = "", photoUrl = "", artists = {}, trackUrl = null }) 
 const ArtistItem = ({ name = "", photoUrl = "", id }) => {
 
     return (
-        <Link to={"/artista/" + id} style={{ textDecoration: "none" }}>
+        <Link to={"/on/artista/" + id} style={{ textDecoration: "none" }}>
             <div className="content-item">
                 <div className="content-item-photo">
                     <img className="artist-img" src={photoUrl} alt=""></img>

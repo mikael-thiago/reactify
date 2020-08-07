@@ -21,7 +21,7 @@ const InputSearch = ({ history, match }) => {
             clearTimeout(timeout);
 
         timeout = setTimeout(() => {
-            history.push("/search/" + e.target.value);
+            history.push("/on/search/" + e.target.value);
             console.log(timeout);
         }, 1500);
     }
@@ -75,18 +75,20 @@ const Topbar = ({ history, match }) => {
             </div>
 
             <Switch>
-                <Route path="/search">
+
+                <Route path="/on/search">
                     <InputSearch history={history} match={match} />
                 </Route>
-                <Route path="/collection">
+
+                <Route path="/on/collection">
                     {() => {
 
                         return (
                             <nav className="topbar-buttons">
-                                <TopbarLink to="/collection/playlists">Playlists</TopbarLink>
-                                <TopbarLink to="/collection/podcasts">Podcasts</TopbarLink>
-                                <TopbarLink to="/collection/artistas">Artistas</TopbarLink>
-                                <TopbarLink to="/collection/albuns">Álbuns</TopbarLink>
+                                <TopbarLink to="/on/collection/playlists">Playlists</TopbarLink>
+                                <TopbarLink to="/on/collection/podcasts">Podcasts</TopbarLink>
+                                <TopbarLink to="/on/collection/artistas">Artistas</TopbarLink>
+                                <TopbarLink to="/on/collection/albuns">Álbuns</TopbarLink>
                             </nav>
                         )
                     }}
