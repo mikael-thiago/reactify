@@ -2,19 +2,17 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getMyPlaylists } from "../../../../../../api-calls/api-calls";
-import { getToken } from "../../../../../../services/token_manipulation";
 import { PlaylistItem } from "../../../../components/ContentItem/ContentItem";
 
 import Section from "../../../../components/Section/Section";
 
 const PlaylistView = () => {
 
-    const authorizationData = getToken();
-
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
-        getMyPlaylists(authorizationData.access_token).then((response) => {
+        getMyPlaylists().then((response) => {
+
             setPlaylists(response.data.items);
         });
 

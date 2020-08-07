@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getSearchResult, getRefreshedToken } from "../../../../api-calls/api-calls";
+import { getSearchResult } from "../../../../api-calls/api-calls";
 
 import { TrackItem, ArtistItem, AlbumItem } from "../../components/ContentItem/ContentItem";
 
 import "./search.css";
-import { getToken, login } from "../../../../services/token_manipulation";
 import Section from "../../components/Section/Section";
 import { withRouter } from "react-router-dom";
 
 const SearchPage = withRouter(({ match }) => {
-    const authorizationData = getToken();
     const [data, setData] = useState({});
 
     const albums = data.albums || [];
@@ -22,20 +20,10 @@ const SearchPage = withRouter(({ match }) => {
 
         if (query !== "") {
 
-            getSearchResult(authorizationData.access_token, query, "artist,track,album").then((response) => {
+            getSearchResult(query, "artist,track,album").then((response) => {
                 setData({ albums: response.data.albums.items, artists: response.data.artists.items, tracks: response.data.tracks.items });
-            }).catch((erro) => {
-                getRefreshedToken(authorizationData.refresh_token).then((access_token) => {
+            });
 
-                    login(access_token, authorizationData.refresh_token);
-                    authorizationData.access_token = access_token;
-
-                    getSearchResult(authorizationData.access_token, query, "artist,track,album").then((response) => {
-                        setData({ albums: response.data.albums.items, artists: response.data.artists.items, tracks: response.data.tracks.items });
-                    });
-
-                })
-            })
         } else {
             setData({});
         }

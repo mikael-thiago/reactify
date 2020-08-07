@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import "./artist.css";
 import { useEffect } from "react";
 import { getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists, getArtist } from "../../../../api-calls/api-calls";
-import { getToken } from "../../../../services/token_manipulation";
+
 import { withRouter, Link, Route } from "react-router-dom";
 
 import { ArtistItem } from "../../components/ContentItem/ContentItem";
 import Section from "../../components/Section/Section";
 import TrackRow from "../../components/TrackRow/TrackRow.jsx"
+import { getResources } from "../../../../utils/url";
 
 
 const AlbumItem = ({ album }) => {
@@ -18,7 +19,7 @@ const AlbumItem = ({ album }) => {
             <div className="artist-album-photo">
                 <img src={albumPhotoUrl} alt="" />
             </div>
-            <Link className="artist-album-name" to={"/album/" + albumId}>
+            <Link className="artist-album-name" to={"/on/album/" + albumId}>
                 {albumName}
             </Link>
         </div>
@@ -27,7 +28,6 @@ const AlbumItem = ({ album }) => {
 
 const MainArtistView = ({ id }) => {
     const artistId = id;
-    const authorizationData = getToken();
 
     const [data, setData] = useState({
         topTracks: [],
@@ -44,11 +44,11 @@ const MainArtistView = ({ id }) => {
 
     useEffect(() => {
 
-        getArtistTopTracks(authorizationData.access_token, artistId, "BR").then((response) => {
+        getArtistTopTracks(artistId, "BR").then((response) => {
 
             const include_groups = ["album", "single", "appears_on", "compilation"];
 
-            getArtistAlbums(authorizationData.access_token, artistId, "BR", include_groups).then((albumsResponse) => {
+            getArtistAlbums(artistId, "BR", include_groups).then((albumsResponse) => {
 
                 let albumData = {
                     album: [],
@@ -75,13 +75,13 @@ const MainArtistView = ({ id }) => {
 
         });
 
-    }, []);
+    }, [artistId]);
 
     return (
         <>
             <Section row title={"Populares"}>
                 {topTracks.map((track, index) => (
-                    <TrackRow showArtists track={track} key={index} />
+                    <TrackRow showImage track={track} key={index} />
                 ))}
             </Section>
 
@@ -129,14 +129,13 @@ const MainArtistView = ({ id }) => {
 const ArtistRelatedArtistsView = ({ id }) => {
 
     const artistId = id;
-    const authorizationData = getToken();
     const [relatedArtists, setRelatedArtists] = useState([]);
 
     useEffect(() => {
-        getArtistRelatedArtists(authorizationData.access_token, artistId).then((response) => {
+        getArtistRelatedArtists(artistId).then((response) => {
             setRelatedArtists(response);
         });
-    }, [])
+    }, [artistId])
 
     return (
         <div className="related-artists-wrapper">
@@ -152,16 +151,22 @@ const ArtistViewSwitches = ({ id }) => {
 
     const [activeView, setActiveView] = useState(0);
 
+    useEffect(() => {
+        const resources = getResources(window.location.href);
+
+        setActiveView(resources.slice(-1)[0] === "related-artists" ? 1 : 0);
+    }, [artistId]);
+
     return (
         <div className="artist-view-switches">
             <div className="artist-view-switch-wrapper">
-                <Link className={"artist-view-switch" + (activeView === 0 ? " active-view" : "")} onClick={() => setActiveView(0)} to={"/artista/" + artistId}>
+                <Link className={"artist-view-switch" + (activeView === 0 ? " active-view" : "")} onClick={() => setActiveView(0)} to={"/on/artista/" + artistId}>
                     <div>
                         Visão geral
                     </div>
                 </Link>
 
-                <Link className={"artist-view-switch" + (activeView === 1 ? " active-view" : "")} onClick={() => setActiveView(1)} to={"/artista/" + artistId + "/related-artists"}>
+                <Link className={"artist-view-switch" + (activeView === 1 ? " active-view" : "")} onClick={() => setActiveView(1)} to={"/on/artista/" + artistId + "/related-artists"}>
                     <div>
                         Artistas Relacionados
                     </div>
@@ -173,16 +178,15 @@ const ArtistViewSwitches = ({ id }) => {
 
 const ArtistInfoBanner = ({ id }) => {
     const artistId = id;
-    const authorizationData = getToken();
 
     const [artist, setArtist] = useState({});
 
     useEffect(() => {
-        getArtist(authorizationData.access_token, artistId).then((response) => {
-            console.log(response.data);
+        getArtist(artistId).then((response) => {
+
             setArtist(response.data);
         })
-    }, []);
+    }, [artistId]);
 
     return (
         <header className="artist-info">
@@ -208,10 +212,10 @@ const ArtistPage = ({ match }) => {
             <ArtistViewSwitches id={artistId} />
 
             <div className="artist-view">
-                <Route path={"/artista/:id/related-artists"}>
+                <Route path={"/on/artista/:id/related-artists"}>
                     <ArtistRelatedArtistsView id={artistId} />
                 </Route>
-                <Route exact path={"/artista/:id"}>
+                <Route exact path={"/on/artista/:id"}>
                     <MainArtistView id={artistId} />
                 </Route>
             </div>

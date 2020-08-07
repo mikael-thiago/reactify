@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 
-import { getMyRecentlyPlayed, getMyTopArtists, getRefreshedToken } from "../../../../api-calls/api-calls";
+import { getMyRecentlyPlayed, getMyTopArtists } from "../../../../api-calls/api-calls";
 
 import { TrackItem, ArtistItem } from "../../components/ContentItem/ContentItem";
-
-import { getToken, login } from '../../../../services/token_manipulation.js';
 
 import "./inicio.css";
 import Section from "../../components/Section/Section";
 
 const Inicio = () => {
 
-    const authorizationData = getToken();
 
     const [data, setData] = useState({});
     const recentlyPlayed = data.recentlyPlayed || [];
@@ -19,33 +16,15 @@ const Inicio = () => {
 
     useEffect(() => {
 
-        if (authorizationData !== null) {
+        getMyRecentlyPlayed().then((response) => {
 
-            getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
+            getMyTopArtists().then((responseTopArtists) => {
 
-                console.log(response.data.items);
+                setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
+            });
 
-                getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
-                    console.log(responseTopArtists.data.items);
-                    setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
-                });
-            }).catch((erro) => {
-                getRefreshedToken(authorizationData.refresh_token).then((access_token) => {
+        });
 
-                    login(access_token, authorizationData.refresh_token);
-                    authorizationData.access_token = access_token;
-
-                    getMyRecentlyPlayed(authorizationData.access_token).then((response) => {
-
-                        getMyTopArtists(authorizationData.access_token).then((responseTopArtists) => {
-
-                            setData({ recentlyPlayed: response.data.items, topArtists: responseTopArtists.data.items });
-                        });
-                    })
-
-                });
-            })
-        }
     }, []);
 
 

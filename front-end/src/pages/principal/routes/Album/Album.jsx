@@ -4,45 +4,13 @@ import { withRouter } from "react-router";
 import "./album.css";
 
 import { getAlbum } from "../../../../api-calls/api-calls.js";
-import { getToken } from "../../../../services/token_manipulation";
 import TrackRow from "../../components/TrackRow/TrackRow";
 import { Link } from "react-router-dom";
-
-
-const parseDurationTime = (ms) => {
-
-    const HOUR_IN_MS = 3600000;
-    const MINUTES_IN_MS = 60000;
-    const SECONDS_IN_MS = 1000;
-
-    let hours = 0, minutes = 0, seconds = 0;
-
-    if (ms > HOUR_IN_MS) {
-        hours = (ms / HOUR_IN_MS);
-        ms = ms % HOUR_IN_MS;
-    }
-
-    if (ms > MINUTES_IN_MS) {
-        minutes += ms / MINUTES_IN_MS;
-        ms = ms % MINUTES_IN_MS;
-    }
-
-    if (ms > SECONDS_IN_MS) {
-        seconds += ms / SECONDS_IN_MS;
-        ms = ms % SECONDS_IN_MS;
-    }
-
-    hours = parseInt(hours);
-    minutes = parseInt(minutes);
-    seconds = parseInt(seconds);
-
-    return { hours: hours, minutes: minutes, seconds: seconds };
-
-}
+import { parseDurationTime } from "../../../../utils/time";
 
 const ArtistLink = ({ children, artist_id }) => {
     return (
-        <Link className="album-artist-link" to={"/artista/" + artist_id} >
+        <Link className="album-artist-link" to={"/on/artista/" + artist_id} >
             {children}
         </Link>
     );
@@ -52,6 +20,7 @@ const AlbumInfoBanner = ({ albumData }) => {
 
     const albumDurationMs = () => {
         let duration = 0;
+
         if (albumData) {
             const tracks = albumData.tracks;
 
@@ -81,12 +50,12 @@ const AlbumInfoBanner = ({ albumData }) => {
     return (
         <header className="album-info">
             <div className="album-photo">
-                <img src={albumData.images[0] ? albumData.images[0].url : ""}></img>
+                <img src={albumData.images[0] ? albumData.images[0].url : ""} alt=""></img>
             </div>
             <div className="album-info-text">
                 <div className="album-type">
                     ÁLBUM
-            </div>
+                </div>
                 <div className="album-name">
                     {albumData.name}
                 </div>
@@ -102,7 +71,7 @@ const AlbumInfoBanner = ({ albumData }) => {
                                         {artist.name}
                                     </ArtistLink>
 
-                                    <text className="separator"> • </text>
+                                    <span className="separator"> • </span>
                                 </>
                             )
                         })}
@@ -123,19 +92,18 @@ const AlbumInfoBanner = ({ albumData }) => {
 const AlbumPage = ({ match }) => {
 
     const albumId = match.params.id;
-    const authorizationData = getToken();
 
     const [albumData, setAlbumData] = useState(null);
 
     console.log(albumData);
 
     useEffect(() => {
-        getAlbum(authorizationData.access_token, albumId).then((response) => {
+        getAlbum(albumId).then((response) => {
 
             setAlbumData(response.data);
 
         });
-    }, [])
+    }, [albumId])
 
 
     const retorno = (albumData ? (
@@ -153,7 +121,7 @@ const AlbumPage = ({ match }) => {
                     })}
 
                     <footer className="album-copyrights">
-                        {albumData.copyrights.map((copyright, index) => (<text>{copyright.text}</text>))}
+                        {albumData.copyrights.map((copyright, index) => (<span key={index}>{copyright.text}</span>))}
                     </footer>
                 </div>
             </div>
