@@ -7,12 +7,16 @@ const Section = ({ children, showMore = false, row = false, title = "", rowsToSh
     const buttonRef = useRef(), sectionRef = useRef();
 
     var maxHeight;
+
     const toggleSectionWrap = (ref, buttonRef) => {
         if (buttonRef.current.textContent === "VER TUDO") {
+            
             maxHeight = ref.current.style.maxHeight;
+
             ref.current.style.maxHeight = "100%";
             buttonRef.current.textContent = "VER MENOS";
         } else {
+            
             ref.current.style.maxHeight = maxHeight;
             buttonRef.current.textContent = "VER TUDO";
         }
