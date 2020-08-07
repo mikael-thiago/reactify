@@ -1,79 +1,111 @@
 import axios from "axios";
+import { getToken, setToken } from "../services/token_manipulation";
 
-const getRefreshedToken = async (refresh_token) => {
-    const response = await (axios.get("http://localhost:4000/authenticate/refreshToken/" + refresh_token));
-    return response.data.access_token;
+const refreshToken = async () => {
+
+    var { _, REFRESH_TOKEN } = getToken();
+
+    const response = await (axios.get("http://localhost:4000/authenticate/refreshToken/" + REFRESH_TOKEN));
+
+    setToken(response.data.access_token);
+
 }
 
-const getMyAlbuns = async (access_token, refresh_token) => {
+const getData = async (URL) => {
+
+    var { ACCESS_TOKEN, _ } = getToken();
+
     let result;
 
-    result = await (axios.get("https://api.spotify.com/v1/me/albums", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+    try {
+
+        result = await (axios.get(URL, {
+            headers: {
+                "Authorization": "Bearer " + ACCESS_TOKEN
+            }
+        }));
 
 
-    return result;
-}
+    } catch (erro) {
 
-const getMyArtists = async (access_token) => {
-    let result;
+        await refreshToken();
 
-    result = await (axios.get("https://api.spotify.com/v1/me/following?type=artist", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+        ({ ACCESS_TOKEN, _ } = getToken());
 
-    return result;
-}
+        result = await (axios.get(URL, {
+            headers: {
+                "Authorization": "Bearer " + ACCESS_TOKEN
+            }
+        }));
 
-const getNewReleases = async (access_token) => {
-    const result = await (axios.get("https://api.spotify.com/v1/browse/new-releases", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
 
-    console.log(result.data);
-
-    return result;
-}
-
-const getMyRecentlyPlayed = async (access_token, refresh_token) => {
-    const result = await (axios.get("https://api.spotify.com/v1/me/player/recently-played", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
     }
-    ));
 
     return result;
 }
 
-const getMyTopArtists = async (access_token, refresh_token) => {
-    const result = (await axios.get("https://api.spotify.com/v1/me/top/artists", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getMyAlbuns = async () => {
+    const URL = "https://api.spotify.com/v1/me/albums";
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-const getMyPlaylists = async (access_token, refresh_token) => {
-    const result = (await axios.get("https://api.spotify.com/v1/me/playlists", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getMyArtists = async () => {
+
+    const URL = "https://api.spotify.com/v1/me/following?type=artist";
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-const getSearchResult = async (access_token, query, type) => {
+const getNewReleases = async () => {
+    const URL = "https://api.spotify.com/v1/browse/new-releases";
+
+    let result;
+
+    result = await getData(URL);
+
+    return result;
+}
+
+const getMyRecentlyPlayed = async () => {
+    const URL = "https://api.spotify.com/v1/me/player/recently-played";
+
+    let result;
+
+    result = await getData(URL);
+
+    return result;
+}
+
+const getMyTopArtists = async () => {
+    const URL = "https://api.spotify.com/v1/me/top/artists";
+
+    let result;
+
+    result = await getData(URL);
+
+    return result;
+}
+
+const getMyPlaylists = async () => {
+    const URL = "https://api.spotify.com/v1/me/playlists";
+
+    let result;
+
+    result = await getData(URL);
+
+    return result;
+}
+
+const getSearchResult = async (query, type) => {
     let queryParsed = "";
     let querySplited = query.split(" ");
 
@@ -82,66 +114,64 @@ const getSearchResult = async (access_token, query, type) => {
         else if (querySplited[i] !== "") queryParsed = queryParsed + "+" + querySplited[i];
     }
 
-    const result = (await axios.get("https://api.spotify.com/v1/search?q=" + queryParsed + "&type=" + type, {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+    const URL = "https://api.spotify.com/v1/search?q=" + queryParsed + "&type=" + type;
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-const getAlbum = async (access_token, album_id) => {
-    const result = (await axios.get("https://api.spotify.com/v1/albums/" + album_id, {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getAlbum = async (album_id) => {
+    const URL = "https://api.spotify.com/v1/albums/" + album_id;
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-const getArtists = async (access_token, artists_id) => {
-    const result = (await axios.get("https://api.spotify.com/v1/artists?ids=" + (artists_id.map((artist_id, index) => ((index === artists_id - 1) ? artist_id : artist_id + ","))), {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getArtists = async (artists_id) => {
+    const URL = "https://api.spotify.com/v1/artists?ids=" + (artists_id.map((artist_id, index) => ((index === artists_id - 1) ? artist_id : artist_id + ",")));
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-const getArtist = async (access_token, artist_id) => {
-    const result = (await axios.get("https://api.spotify.com/v1/artists/" + artist_id, {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getArtist = async (artist_id) => {
+    const URL = "https://api.spotify.com/v1/artists/" + artist_id;
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-const getArtistTopTracks = async (access_token, artist_id, country_code) => {
-    const result = (await axios.get("https://api.spotify.com/v1/artists/" + artist_id + "/top-tracks?country=" + country_code, {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getArtistTopTracks = async (artist_id, country_code) => {
+    const URL = "https://api.spotify.com/v1/artists/" + artist_id + "/top-tracks?country=" + country_code;
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-const getArtistAlbums = async (access_token, artist_id, country_code, include_groups) => {
+const getArtistAlbums = async (artist_id, country_code, include_groups) => {
     let retorno = [];
 
     let result = { data: { next: "https://api.spotify.com/v1/artists/" + artist_id + "/albums?country=" + country_code + "&include_groups=" + (include_groups.map((include_group, index) => ((index === include_groups.length - 1) ? include_group : include_group + ","))) + "&limit=50" } };
 
     do {
-        result = (await axios.get(result.data.next, {
-            headers: {
-                "Authorization": "Bearer " + access_token
-            }
-        }));
+        const URL = result.data.next;
+
+        result = await getData(URL);
 
         for (var i = 0; i < result.data.items.length; i++) {
             retorno.push(result.data.items[i]);
@@ -151,24 +181,24 @@ const getArtistAlbums = async (access_token, artist_id, country_code, include_gr
     return retorno;
 }
 
-const getArtistRelatedArtists = async (access_token, artist_id) => {
-    const result = (await axios.get("https://api.spotify.com/v1/artists/" + artist_id + "/related-artists", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getArtistRelatedArtists = async (artist_id) => {
+    const URL = "https://api.spotify.com/v1/artists/" + artist_id + "/related-artists";
+
+    let result;
+
+    result = await getData(URL);
 
     return result.data.artists;
 }
 
-const getMyShows = async (access_token) => {
-    const result = (await axios.get("https://api.spotify.com/v1/me/shows", {
-        headers: {
-            "Authorization": "Bearer " + access_token
-        }
-    }));
+const getMyShows = async () => {
+    const URL = "https://api.spotify.com/v1/me/shows";
+
+    let result;
+
+    result = await getData(URL);
 
     return result;
 }
 
-export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult, getRefreshedToken, getNewReleases, getAlbum, getArtists, getArtist, getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists, getMyShows, getMyArtists };
+export { getMyAlbuns, getMyRecentlyPlayed, getMyTopArtists, getMyPlaylists, getSearchResult, getNewReleases, getAlbum, getArtists, getArtist, getArtistTopTracks, getArtistAlbums, getArtistRelatedArtists, getMyShows, getMyArtists };
