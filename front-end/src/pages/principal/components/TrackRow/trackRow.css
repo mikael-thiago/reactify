@@ -21,6 +21,16 @@
     width: 100%;
 }
 
+.track-row-album-photo{
+    width: 55px;
+    height: 95%;
+}
+
+.track-row-album-photo img{
+    width: 100%;
+    height: 100%;
+}
+
 .track-name-artists{
     margin: 0px 10px;
     width: 100%;
@@ -33,13 +43,13 @@
 }
 
 .track-name{
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.05em;
+    font-weight: 500;
     color: white;
 }
 
 .track-artists{
-    font-size: 1em;
+    font-size: .9em;
     color: #aaaaaa; 
 }
 
