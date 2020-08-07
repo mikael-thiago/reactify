@@ -1,19 +1,25 @@
-import React from "react";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import "./principal.css";
+import React, { useEffect, useState } from "react";
+import { Switch, Route, withRouter } from "react-router-dom";
 
+//Components
 import Player from "./components/Player/Player";
-
 import Inicio from "./routes/Inicio/Inicio";
 import Sidebar from "./components/Sidebar/Sidebar";
 import SearchPage from "./routes/Search/Search";
-
-import reduxStore from "../../redux/store/store.js";
-import { Provider } from "react-redux";
 import AlbumPage from "./routes/Album/Album";
 import Topbar from "./components/Topbar/Topbar";
 import ArtistPage from "./routes/Artist/Artist";
 import CollectionPage from "./routes/Collection/Collection";
+
+//Redux
+import reduxStore from "../../redux/store/store.js";
+import { Provider } from "react-redux";
+
+//Token Services
+import { getToken } from "../../services/token_manipulation";
+
+//Styles
+import "./principal.css";
 
 const Body = () => {
 
@@ -21,19 +27,19 @@ const Body = () => {
         <div className="body">
             <Topbar />
             <Switch>
-                <Route path={"/search/:query"}>
+                <Route path="/on/search/:query">
                     <SearchPage />
                 </Route>
-                <Route path={"/collection"}>
+                <Route path="/on/collection">
                     <CollectionPage />
                 </Route>
-                <Route path={"/album/:id"}>
+                <Route path="/on/album/:id">
                     <AlbumPage />
                 </Route>
-                <Route path={"/artista/:id"}>
+                <Route path="/on/artista/:id">
                     <ArtistPage />
                 </Route>
-                <Route exact={true} path={"/"}>
+                <Route exact path="/on">
                     <Inicio />
                 </Route>
             </Switch>
@@ -42,23 +48,29 @@ const Body = () => {
     );
 }
 
-const Principal = ({ match, history, setLoggedIn }) => {
+const Principal = ({ history }) => {
 
-    const store = reduxStore;
+    const [tokenChecked, setTokenChecked] = useState(false);
+
+    useEffect(() => {
+        if (getToken() === null || getToken() === undefined) history.push("/");
+        else setTokenChecked(true);
+    }, []);
 
     return (
-        <>
-            <Provider store={reduxStore}>
-                <Router>
+        tokenChecked ?
+            (<>
+                <Provider store={reduxStore}>
+
                     <div className="principal-wrapper">
-                        <Sidebar setLoggedIn={setLoggedIn} match={match} history={history} />
-                        <Body match={match} history={history} />
-                        <Player match={match} />
+                        <Sidebar />
+                        <Body />
+                        <Player />
                     </div>
-                </Router>
-            </Provider>
-        </>
+
+                </Provider>
+            </>): (<></>)
     )
 }
 
-export default Principal;
+export default withRouter(Principal);

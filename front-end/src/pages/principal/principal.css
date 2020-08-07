@@ -12,8 +12,9 @@ body{
     background-color: #111111;
     color: #aaaaaa;
     font-size: 14px;
-    fill: currentColor;
 }
+
+
 
 .principal-wrapper{
     display: grid;
