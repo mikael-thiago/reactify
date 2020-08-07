@@ -1,6 +1,6 @@
 
-const token_key = "access_token";
-const refresh_token_key = "refresh_token";
+const token_key = "ACCESS_TOKEN";
+const refresh_token_key = "REFRESH_TOKEN";
 
 const login = (access_token, refresh_token) => {
     localStorage.setItem(token_key, access_token);
@@ -10,6 +10,7 @@ const login = (access_token, refresh_token) => {
 const setToken = (access_token) => {
 
     localStorage.setItem(token_key, access_token);
+
 }
 
 const logout = () => {
@@ -18,8 +19,9 @@ const logout = () => {
 }
 
 const getToken = () => {
-    if (localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "null" && localStorage.getItem("access_token") !== undefined)
-        return { access_token: localStorage.getItem("access_token"), refresh_token: localStorage.getItem("refresh_token") }
+
+    if (localStorage.getItem(token_key) !== null && localStorage.getItem(token_key) !== "null" && localStorage.getItem(token_key) !== undefined)
+        return { ACCESS_TOKEN: localStorage.getItem(token_key), REFRESH_TOKEN: localStorage.getItem(refresh_token_key) }
 
     return null;
 }
