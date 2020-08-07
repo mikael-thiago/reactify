@@ -1,0 +1,9 @@
+{
+    "scripts": {
+        "start": "concurrently \"cd back-end && node src/index.js\" \"cd front-end && npm start\"",
+        "install": "concurrently \"cd back-end && npm install\" \"cd front-end && npm install\""
+    },
+    "devDependencies": {
+        "concurrently": "^5.2.0"
+    }
+}
