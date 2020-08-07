@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setTime, setDuration, setPlaying } from "../../../../redux/slices/playerSlice";
+import { setTime, setPlaying } from "../../../../redux/slices/playerSlice";
 import "./player.css";
 
 import pause from "../../../../images/pause.svg";
@@ -17,8 +17,6 @@ const PlayerController = () => {
 
     useEffect(() => {
 
-        console.log(player.duration);
-
         if (player.trackUrl) {
 
             if (player.playing)
@@ -27,7 +25,7 @@ const PlayerController = () => {
                 audioRef.current.pause();
         }
 
-    }, [player.playing, player.duration]);
+    }, [player.playing, player.duration, player.trackUrl]);
 
     const handlePlayPause = () => {
 
