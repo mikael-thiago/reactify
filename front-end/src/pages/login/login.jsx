@@ -3,25 +3,10 @@ import "./login.css";
 
 import "../../services/token_manipulation";
 import { login } from '../../services/token_manipulation';
+import { withRouter } from 'react-router-dom';
+import { getParams } from '../../utils/url';
 
-const LoginCard = ({ setLoggedIn }) => {
-
-    const getParams = (url) => {
-        let params = url.split("?")[1];
-
-        let retorno = {};
-
-        if (params) {
-            params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                let [key, value] = params[i].split("=");
-                retorno[key] = value;
-            }
-        }
-
-        return retorno;
-
-    }
+const LoginCard = withRouter(({ history }) => {
 
     useEffect(() => {
 
@@ -30,9 +15,12 @@ const LoginCard = ({ setLoggedIn }) => {
         let access_token = params.access_token;
         let refresh_token = params.refresh_token;
 
-        if (access_token !== null && access_token != undefined) {
+        if (access_token !== null && access_token !== undefined) {
+
             login(access_token, refresh_token);
-            setLoggedIn(true);
+
+            history.push("/on");
+
         }
 
     }, []);
@@ -54,13 +42,15 @@ const LoginCard = ({ setLoggedIn }) => {
             </div>
         </div>
     );
-}
+});
 
 const LoginPage = (props) => {
 
     return (
         <div className="login-wrapper">
-            <LoginCard setLoggedIn={props.setLoggedIn} />
+
+            <LoginCard />
+
             <div className="login-body">
 
             </div>
