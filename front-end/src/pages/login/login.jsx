@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
-import "./login.css";
-
-import "../../services/token_manipulation";
-import { login } from '../../services/token_manipulation';
 import { withRouter } from 'react-router-dom';
-import { getParams } from '../../utils/url';
+
+import { login } from '../../services/token_manipulation';
+
+//Utils
+import { getQueryParams } from '../../utils/url';
+
+//Styles
+import "./login.css";
 
 const LoginCard = withRouter(({ history }) => {
 
     useEffect(() => {
 
-        let params = getParams(window.location.href);
+        let params = getQueryParams(window.location.href);
 
         let access_token = params.access_token;
         let refresh_token = params.refresh_token;

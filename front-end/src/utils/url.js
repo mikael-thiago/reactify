@@ -1,4 +1,4 @@
-export const getParams = (url) => {
+export const getQueryParams = (url) => {
 
     let params = url.split("?")[1];
 
