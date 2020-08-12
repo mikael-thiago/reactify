@@ -27,7 +27,7 @@ const PlayerAudioController = () => {
                 <div className="player-volume-icon">
                     <img src={player.volume > 0 ? speaker : mute} alt="" />
                 </div>
-                <input className="player-volume-slider slider" type="range" min="0" max="1.0" step="0.01" onChange={handleChangeVolume} />
+                <input className="player-volume-slider slider" style={{ backgroundImage: `linear-gradient(to right, #bbbbbb ${player.volume * 100}%, #555555 ${player.volume * 100}%)` }} type="range" min="0" max="1.0" step="0.01" onChange={handleChangeVolume} />
             </div>
 
         </div>
@@ -41,6 +41,8 @@ const PlayerController = () => {
     const dispatch = useDispatch();
 
     const audioRef = useRef();
+
+    const currentTimePercentage = (player.actualTime * 100 / player.duration) || 0;
 
     useEffect(() => {
 
@@ -64,6 +66,9 @@ const PlayerController = () => {
         }
     }
 
+    const handleTimeChange = (e) => {
+        audioRef.current.currentTime = e.target.value;
+    }
 
     const parseTime = (time) => {
         let hours = 0, minutes = 0, seconds = 0;
@@ -110,12 +115,7 @@ const PlayerController = () => {
                         {parseTime(parseInt(player.actualTime))}
                     </div>
 
-                    <div className="player-timeline-actual" style={{ width: (player.actualTime * 100 / player.duration) + "%" }}>
-
-                    </div>
-                    <div className="player-timeline-restant" style={{ width: (100 - (player.actualTime * 100 / (player.duration === 0 ? 1 : player.duration))) + "%" }}>
-
-                    </div>
+                    <input type="range" className="player-timeline-slider slider" min="0" max={player.duration} step="0.001" value={player.actualTime} style={{ backgroundImage: `linear-gradient(to right, #bbbbbb ${currentTimePercentage}%, #555555 ${currentTimePercentage}%)` }} onMouseDown={() => dispatch(setPlaying({ playing: false }))} onMouseUp={() => dispatch(setPlaying({ playing: true }))} onChange={() => { }} onInput={handleTimeChange} />
 
                     <div className="player-track-time-info duration">
                         {parseTime(parseInt(player.duration))}
