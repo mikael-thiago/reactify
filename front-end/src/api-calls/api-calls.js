@@ -3,6 +3,7 @@ import { getToken, setToken } from "../services/token_manipulation";
 
 const refreshToken = async () => {
 
+    //eslint-disable-next-line
     var { _, REFRESH_TOKEN } = getToken();
 
     const response = await (axios.get("http://localhost:4000/authenticate/refreshToken/" + REFRESH_TOKEN));
@@ -13,6 +14,7 @@ const refreshToken = async () => {
 
 const getData = async (URL) => {
 
+    //eslint-disable-next-line
     var { ACCESS_TOKEN, _ } = getToken();
 
     let result;
@@ -30,6 +32,7 @@ const getData = async (URL) => {
 
         await refreshToken();
 
+        //eslint-disable-next-line
         ({ ACCESS_TOKEN, _ } = getToken());
 
         result = await (axios.get(URL, {
