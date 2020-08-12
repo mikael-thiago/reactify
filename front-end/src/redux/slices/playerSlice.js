@@ -9,7 +9,8 @@ export const playerSlice = createSlice({
         trackArtists: [],
         actualTime: 0,
         duration: 0,
-        playing: false
+        playing: false,
+        volume: 1
     },
     reducers: {
         setTrack: (state, action) => {
@@ -29,10 +30,13 @@ export const playerSlice = createSlice({
         },
         setPlaying: (state, action) => {
             state.playing = action.payload.playing;
+        },
+        setVolume: (state, action) => {
+            state.volume = action.payload.volume;
         }
     }
 })
 
-export const { setTrack, setTime, setDuration, setPlaying } = playerSlice.actions;
+export const { setTrack, setTime, setDuration, setPlaying, setVolume } = playerSlice.actions;
 
 export default playerSlice.reducer;

@@ -1,11 +1,38 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setTime, setPlaying } from "../../../../redux/slices/playerSlice";
+import { setTime, setPlaying, setVolume } from "../../../../redux/slices/playerSlice";
 import "./player.css";
 
 import pause from "../../../../images/pause.svg";
 import play from "../../../../images/play-player.svg";
+import speaker from "../../../../images/speaker.svg";
+import mute from "../../../../images/mute.svg";
+
 import { useEffect } from "react";
+
+const PlayerAudioController = () => {
+    const player = useSelector((state) => state.player);
+
+    const dispatch = useDispatch();
+
+    const handleChangeVolume = (e) => {
+
+        dispatch(setVolume({ volume: e.target.value }));
+    }
+
+    return (
+
+        <div className="player-sound">
+            <div className="player-volume">
+                <div className="player-volume-icon">
+                    <img src={player.volume > 0 ? speaker : mute} alt="" />
+                </div>
+                <input className="player-volume-slider slider" type="range" min="0" max="1.0" step="0.01" onChange={handleChangeVolume} />
+            </div>
+
+        </div>
+    );
+}
 
 const PlayerController = () => {
 
@@ -23,9 +50,11 @@ const PlayerController = () => {
                 audioRef.current.play();
             else
                 audioRef.current.pause();
+
+            audioRef.current.volume = player.volume;
         }
 
-    }, [player.playing, player.duration, player.trackUrl]);
+    }, [player.playing, player.duration, player.trackUrl, player.volume]);
 
     const handlePlayPause = () => {
 
@@ -34,6 +63,7 @@ const PlayerController = () => {
             dispatch(setPlaying({ playing: !player.playing }));
         }
     }
+
 
     const parseTime = (time) => {
         let hours = 0, minutes = 0, seconds = 0;
@@ -62,34 +92,40 @@ const PlayerController = () => {
     }
 
     return (
-        <div className="player-controller">
+        <>
+            <div className="player-controller">
 
-            {player.trackUrl ? <audio autoPlay onTimeUpdate={() => { dispatch(setTime({ actualTime: audioRef.current.currentTime })) }} src={player.trackUrl} ref={audioRef}>
-            </audio> : <></>}
-            <div className="player-controls">
-                <button className="player-control-play-pause" onClick={handlePlayPause}>
-                    <img src={(player.playing ? pause : play)} alt="">
-                    </img>
-                </button>
+                {player.trackUrl ? <audio autoPlay onTimeUpdate={() => { dispatch(setTime({ actualTime: audioRef.current.currentTime })) }} src={player.trackUrl} ref={audioRef}>
+                </audio> : <></>}
+
+                <div className="player-controls">
+                    <button className="player-control-play-pause" onClick={handlePlayPause}>
+                        <img src={(player.playing ? pause : play)} alt="">
+                        </img>
+                    </button>
+                </div>
+                <div className="player-timeline">
+
+                    <div className="player-track-time-info actual-time">
+                        {parseTime(parseInt(player.actualTime))}
+                    </div>
+
+                    <div className="player-timeline-actual" style={{ width: (player.actualTime * 100 / player.duration) + "%" }}>
+
+                    </div>
+                    <div className="player-timeline-restant" style={{ width: (100 - (player.actualTime * 100 / (player.duration === 0 ? 1 : player.duration))) + "%" }}>
+
+                    </div>
+
+                    <div className="player-track-time-info duration">
+                        {parseTime(parseInt(player.duration))}
+                    </div>
+                </div>
             </div>
-            <div className="player-timeline">
 
-                <div className="player-track-time-info actual-time">
-                    {parseTime(parseInt(player.actualTime))}
-                </div>
+            <PlayerAudioController />
 
-                <div className="player-timeline-actual" style={{ width: (player.actualTime * 100 / player.duration) + "%" }}>
-
-                </div>
-                <div className="player-timeline-restant" style={{ width: (100 - (player.actualTime * 100 / (player.duration === 0 ? 1 : player.duration))) + "%" }}>
-
-                </div>
-
-                <div className="player-track-time-info duration">
-                    {parseTime(parseInt(player.duration))}
-                </div>
-            </div>
-        </div>
+        </>
     )
 }
 
@@ -118,10 +154,6 @@ const Player = () => {
             </div>
 
             <PlayerController />
-
-            <div className="player-sound">
-
-            </div>
 
         </div >
     )
