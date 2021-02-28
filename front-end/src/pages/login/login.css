@@ -1,101 +1,60 @@
 #root {
-    height: 100vh;
-    width: 100vw;
-    margin: 0px;
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
 }
 
-body{
-    width: 100%;
-    height: 100%;
+body {
+  width: 100%;
+  height: 100%;
 }
 
-.login-wrapper{
-    display: grid;
-    grid-template-columns: 30vw 70vw;
-    grid-template-areas: "login-card login-body";
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
 
 .login-card {
-    grid-area: login-card;
-    height: 100vh;
-    background-color: white;
+  height: 100px;
+  width: 300px;
+  background-color: #181818;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+  padding: 18px;
 }
 
-.login-card-header{
-    height: 30%;
-}
-.login-card-body{
-    width: 100%;
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.login-card-body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.login-form {
-    width: 90%;
-    height: 200px;
-    border-radius: 3px;
-    margin-top: 25%;
-    display: block;
+.login-form button {
+  width: 80%;
+  height: 50px;
+  border-radius: 8px;
+  border: 2px solid #2cd2e8;
+  color: #2cd2e8;
+  background-color: #181818;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  outline: none;
 }
 
-.login-form label{
-    display: inline-block;
-    margin-bottom: .5rem;
-}
-.login-form input{
-    width: 100%;
-    margin-bottom: 10px;    
-    border-radius: 3px;
-    height: 30px;
-    border: solid .1px #aaaaaa;
-}
-
-.login-form button{
-    width: 100px;
-    height: 100px;
-
-    border-radius: 50%;
-    margin-top: 15px;
-    
-    border: hidden;
-    background-color: #1DB954;
-    color: white;
-
-    cursor: pointer;
-
-    transition: .5s;
-    display: flex;
-
-}
-
-.login-form button:hover{
-    background-color: #12b735;
-}
-
-.login-body{
-    grid-area: login-body;
-    height: 100vh;
-    background-color: #282828;
-}
-
-.login-form button a{
-    text-decoration: none;
-    height: 100%;
-    width: 100%;
-    color: #dddddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: .5s;
-}
-
-.login-form button a:hover{
-    text-decoration: none;
-    color: white;
+.login-form button > a {
+  text-decoration: none;
+  color: #2cd2e8;
+  width: 100%;
+  height: 100%;
+  display: block;
+  line-height: 44px;
 }
